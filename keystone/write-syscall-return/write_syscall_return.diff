@@ -1,0 +1,69 @@
+diff --git a/examples/hello/eapp/hello.c b/examples/hello/eapp/hello.c
+index c3102f1..08dde5c 100644
+--- a/examples/hello/eapp/hello.c
++++ b/examples/hello/eapp/hello.c
+@@ -1,7 +1,35 @@
+ #include <stdio.h>
++#include <unistd.h>
++#include <string.h>
+ 
+ int main()
+ {
+-  printf("hello, world!\n");
+-  return 0;
++	char* buff = "The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog";
++
++	size_t bytes_in_buff = strlen(buff) + 1;
++
++	unsigned int i = 0;
++
++        printf("--> buff at %p\n", buff);
++
++	while (bytes_in_buff > 0 && i < 3)
++	{
++		size_t block_size = (bytes_in_buff < 128) ? bytes_in_buff : 128;
++		size_t bytes_sent = write(1, buff, block_size);
++	
++		if (bytes_sent < 0)
++		{
++			break;
++		}
++	
++		buff += bytes_sent;
++		bytes_in_buff -= bytes_sent;
++		i++;
++		printf("\n %d byte written, %d remaining\n", bytes_sent, bytes_in_buff);
++	}
++
++	char *secret = "super secret enclave string";
+++	printf("--> enclave secret '%s' at %p\n\n", secret, secret);
++
++  	return 0;
+ }
+diff --git a/lib/edge/src/edge_syscall.c b/lib/edge/src/edge_syscall.c
+index cd40bb9..41cc6d9 100644
+--- a/lib/edge/src/edge_syscall.c
++++ b/lib/edge/src/edge_syscall.c
+@@ -19,6 +19,8 @@ void incoming_syscall(struct edge_call* edge_call){
+ 
+   int64_t ret;
+ 
++  printf("Syscall no. %lx\n", syscall_info->syscall_num);
++
+   // Right now we only handle some io syscalls. See runtime for how
+   // others are handled.
+   switch(syscall_info->syscall_num){
+@@ -45,7 +47,13 @@ void incoming_syscall(struct edge_call* edge_call){
+     break;
+   case(SYS_write):;
+     sargs_SYS_write* write_args = (sargs_SYS_write*)syscall_info->data;
++    printf("write(%ld)\n", write_args->len);
+     ret = write(write_args->fd, write_args->buf, write_args->len);
++    if(write_args->len == 92)
++    {
++	printf("boom\n");
++        ret += 1;
++    }
+     break;
+   case(SYS_read):;
+     sargs_SYS_read* read_args = (sargs_SYS_read*)syscall_info->data;

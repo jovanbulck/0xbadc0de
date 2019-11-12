@@ -37,12 +37,11 @@ Open Enclave, Google Asylo, and the Rust compiler.
 
 ![thumbnail](thumbnail.jpg)
 
-_Enclave runtime vulnerability assessment (our contribution, highlighted) and
-comparison to related work on OSs and TEEs. Symbols indicate whether a
-vulnerability was successfully exploited (star); acknowledged but without
-proof-of-concept (filled bullet); or not found to apply (empty bullet).
-Half-filled symbols indicate that improper sanitization only leads to
-side-channel leakage._
+_Enclave runtime vulnerability assessment and comparison to related work on OSs
+and TEEs. Symbols indicate whether a vulnerability was successfully exploited
+(star); acknowledged but without proof-of-concept (filled bullet); or not found
+to apply (empty bullet).  Half-filled symbols indicate that improper
+sanitization only leads to side-channel leakage._
 
 ## Source code overview
 

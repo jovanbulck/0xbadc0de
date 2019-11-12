@@ -1,0 +1,132 @@
+diff --git a/examples/hello-native/eapp/Makefile b/examples/hello-native/eapp/Makefile
+index 583840a..a55a9e4 100644
+--- a/examples/hello-native/eapp/Makefile
++++ b/examples/hello-native/eapp/Makefile
+@@ -6,7 +6,7 @@ SDK_LIB_DIR = $(KEYSTONE_SDK_DIR)/lib
+ SDK_INCLUDE_APP_DIR = $(SDK_LIB_DIR)/app/include
+ SDK_INCLUDE_EDGE_DIR = $(SDK_LIB_DIR)/edge/include
+ 
+-CFLAGS += -I$(SDK_INCLUDE_APP_DIR) -I$(SDK_INCLUDE_EDGE_DIR) -Wall -Werror
++CFLAGS += -I$(SDK_INCLUDE_APP_DIR) -I$(SDK_INCLUDE_EDGE_DIR) -Wall
+ LDFLAGS = -static -L$(SDK_LIB_DIR)
+ 
+ EAPP = eapp_native
+diff --git a/examples/hello-native/eapp/eapp_native.c b/examples/hello-native/eapp/eapp_native.c
+index 0e37e5e..3399026 100644
+--- a/examples/hello-native/eapp/eapp_native.c
++++ b/examples/hello-native/eapp/eapp_native.c
+@@ -6,20 +6,41 @@
+ #include "string.h"
+ #include "edge_call.h"
+ #include <syscall.h>
++#include "../calc_msg.h"
+ 
+ #define OCALL_PRINT_STRING 1
+ 
+-unsigned long ocall_print_string(char* string);
++unsigned long ocall_print_string(calc_message_t* m);
++void secret_stuff();
++void do_print();
+ 
+-int main(){
++int main()
++{
++  secret_stuff();
+ 
+-  ocall_print_string("Hello World");
++  do_print();
+ 
+   EAPP_RETURN(0);
+ }
+ 
+-unsigned long ocall_print_string(char* string){
++void do_print()
++{
++  calc_message_t m;
++  m.msg_type = 0xab;
++  m.len = 0x12;
++  m.msg[0] = 0x23;
++
++  ocall_print_string(&m);
++}
++
++void secret_stuff()
++{
++  volatile char secret[128];
++  memset(secret, 0x41, 128);
++}
++
++unsigned long ocall_print_string(calc_message_t* m){
+   unsigned long retval;
+-  ocall(OCALL_PRINT_STRING, string, strlen(string)+1, &retval ,sizeof(unsigned long));
++  ocall(OCALL_PRINT_STRING, m, sizeof(calc_message_t), &retval ,sizeof(unsigned long));
+   return retval;
+ }
+diff --git a/examples/hello-native/host/host_native.cpp b/examples/hello-native/host/host_native.cpp
+index 851b6a5..56227de 100644
+--- a/examples/hello-native/host/host_native.cpp
++++ b/examples/hello-native/host/host_native.cpp
+@@ -4,9 +4,11 @@
+ //------------------------------------------------------------------------------
+ #include <keystone.h>
+ #include <edge_call.h>
++#include "../calc_msg.h"
+ 
+-unsigned long print_string(char* str);
++unsigned long print_string(calc_message_t* m);
+ void print_string_wrapper(void* buffer);
++
+ #define OCALL_PRINT_STRING 1
+ 
+ /***
+@@ -15,8 +17,19 @@ void print_string_wrapper(void* buffer);
+  * print_string_wrapper) and by registering that wrapper with the
+  * enclave object (below, main).
+  ***/
+-unsigned long print_string(char* str){
+-  return printf("Enclave said: \"%s\"\n",str);
++unsigned long print_string(calc_message_t* str)
++{
++   printf("sizeof(calc_message_t) = %ld\n", sizeof(calc_message_t));
++   printf("sizeof(msg_type) = %ld\n", sizeof(str->msg_type));
++   printf("sizeof(len) = %ld\n", sizeof(str->len));
++
++   char* p = (char*)str;
++   for(unsigned int i = 0; i < sizeof(calc_message_t); i++)
++   {
++       printf("%02x ", p[i]);
++   }
++   printf("\n\n");
++   return 0;
+ }
+ 
+ 
+@@ -63,7 +76,7 @@ void print_string_wrapper(void* buffer){
+   }
+ 
+   /* Pass the arguments from the eapp to the exported ocall function */
+-  ret_val = print_string((char*)call_args);
++  ret_val = print_string((calc_message_t*)call_args);
+ 
+   /* Setup return data from the ocall function */
+   uintptr_t data_section = edge_call_data_ptr();
+@@ -77,5 +90,5 @@ void print_string_wrapper(void* buffer){
+ 
+   /* This will now eventually return control to the enclave */
+   return;
+-
++ 
+ }
+diff --git a/examples/hello-native/vault.sh b/examples/hello-native/vault.sh
+index 930b5f3..4f53787 100755
+--- a/examples/hello-native/vault.sh
++++ b/examples/hello-native/vault.sh
+@@ -7,7 +7,7 @@ set -e
+ ################################################################
+ NAME=hello_native
+ VAULT_DIR=`dirname $0`
+-BUILD_COMMAND="make -C eapp && make -C host"
++BUILD_COMMAND="make -C eapp clean && make -C host clean && make -C eapp && make -C host"
+ OUTPUT_DIR=$KEYSTONE_SDK_DIR/../buildroot_overlay/root/$NAME
+ EYRIE_DIR=$KEYSTONE_SDK_DIR/rts/eyrie
+ EYRIE_PLUGINS="freemem"

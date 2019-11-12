@@ -4,3 +4,6 @@
 [submodule "sancus/soteria/soteria-test"]
 	path = sancus/soteria/soteria-test
 	url = https://github.com/sancus-pma/soteria-test.git
+[submodule "keystone/keystone-sdk"]
+	path = keystone/keystone-sdk
+	url = https://github.com/keystone-enclave/keystone-sdk.git
