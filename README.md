@@ -53,6 +53,8 @@ patched, we provide [git
 submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) pointing to
 the vulnerable trusted runtime versions.
 
+![overview](overview.png)
+
 ## License
 
 See the corresponding licenses of the various open-source projects we studied.
