@@ -1,0 +1,133 @@
+From 1dcfe505a376a23c52b924e4d98b512d1ee76b34 Mon Sep 17 00:00:00 2001
+Subject: [PATCH] URTS modifications to modify RFLAGS.DF before EENTER.
+
+---
+ common/inc/sgx_urts.h                |  2 ++
+ psw/urts/linux/enter_enclave.S       | 31 +++++++++++++++++++++++++++++++
+ psw/urts/linux/urts.cpp              |  7 +++++++
+ psw/urts/linux/urts.lds              |  1 +
+ sdk/simulation/urtssim/urts_deploy.c |  5 +++++
+ 5 files changed, 46 insertions(+)
+
+diff --git a/common/inc/sgx_urts.h b/common/inc/sgx_urts.h
+index 20cb0d7..125974e 100644
+--- a/common/inc/sgx_urts.h
++++ b/common/inc/sgx_urts.h
+@@ -85,6 +85,8 @@ typedef uint8_t sgx_launch_token_t[1024];
+ #define SGX_DEBUG_FLAG 0
+ #endif
+ 
++int SGXAPI sgx_do_std(int std);
++
+ sgx_status_t SGXAPI sgx_create_enclave(const char *file_name, 
+                                        const int debug, 
+                                        sgx_launch_token_t *launch_token, 
+diff --git a/psw/urts/linux/enter_enclave.S b/psw/urts/linux/enter_enclave.S
+index 1c21e2d..7caae05 100644
+--- a/psw/urts/linux/enter_enclave.S
++++ b/psw/urts/linux/enter_enclave.S
+@@ -38,6 +38,9 @@
+ .data
+ g_xsave_size: .long 0
+ g_clean_ymm:  .long 0
++g_do_std:     .quad 0
++g_prev_df:    .quad 0
++ 
+ .text
+ DECLARE_GLOBAL_FUNC set_xsave_info
+ #if defined(LINUX32)
+@@ -53,6 +56,16 @@ DECLARE_GLOBAL_FUNC set_xsave_info
+     movl    %edx, (%xax)
+     ret
+ 
++DECLARE_GLOBAL_FUNC do_std
++   push %xbx
++   lea_pic     g_do_std, %xax
++   mov         naked_arg0, %xbx
++   mov         %xbx, (%xax)
++   lea_pic     g_prev_df, %xax
++   mov         (%xax), %xax
++   pop %xbx
++   ret
++ 
+ DECLARE_GLOBAL_FUNC __morestack
+ 
+ //__morestack:
+@@ -74,11 +87,29 @@ EENTER_PROLOG
+ 1:
+     mov frame_arg0, %xbx                        /* tcs addr */
+     lea_pic .Lasync_exit_pointer, %xcx          /* aep addr */
++
++    lea_pic g_do_std, %xax
++    mov (%xax), %xax
++    cmp $0, %xax
++    je 1f
++    std 
++1:
+     mov $SE_EENTER, %xax                        /* EENTER leaf */
+ 
+ .Leenter_inst:
+     ENCLU
+ 
++    push %xax
++    push %xbx
++    pushf
++    lea_pic g_prev_df, %xbx
++    mov (%xsp), %xax
++    mov %xax, (%xbx)
++    popf
++    pop %xbx
++    pop %xax
++    cld
++
+ /* 
+  * at this point, we may have returned due to a normal EEXIT,
+  * or we may have returned due to an OCALL. We differentiate 
+diff --git a/psw/urts/linux/urts.cpp b/psw/urts/linux/urts.cpp
+index 8e7b406..0a7960d 100644
+--- a/psw/urts/linux/urts.cpp
++++ b/psw/urts/linux/urts.cpp
+@@ -65,6 +65,13 @@ static bool inline _check_ex_params_(const uint32_t ex_features, const void* ex_
+     return ((ex_features | _SGX_EX_FEATURES_MASK_) == _SGX_EX_FEATURES_MASK_);
+ }
+ 
++extern "C" int  do_std(int std);
++
++extern "C" int sgx_do_std(int std)
++{
++    return do_std(std);
++}
++
+ extern "C" sgx_status_t __sgx_create_enclave_ex(const char *file_name, 
+                                                 const int debug, 
+                                                 sgx_launch_token_t *launch_token, 
+diff --git a/psw/urts/linux/urts.lds b/psw/urts/linux/urts.lds
+index 5ba4bd1..48ba834 100644
+--- a/psw/urts/linux/urts.lds
++++ b/psw/urts/linux/urts.lds
+@@ -1,5 +1,6 @@
+ {
+     global:
++        sgx_do_std;
+         sgx_create_enclave;
+         sgx_create_enclave_ex;
+         sgx_destroy_enclave;
+diff --git a/sdk/simulation/urtssim/urts_deploy.c b/sdk/simulation/urtssim/urts_deploy.c
+index 1fe7cc9..7022653 100644
+--- a/sdk/simulation/urtssim/urts_deploy.c
++++ b/sdk/simulation/urtssim/urts_deploy.c
+@@ -44,6 +44,11 @@ sgx_status_t sgx_create_enclave_ex()
+     return SGX_ERROR_UNEXPECTED;
+ }
+ 
++int sgx_do_std(int std)
++{
++    printf("Please use the correct uRTS library from PSW package.\n");
++}
++
+ sgx_status_t sgx_create_enclave_from_buffer_ex()
+ {
+     printf("Please use the correct uRTS library from PSW package.\n");
+-- 
+2.7.4
+

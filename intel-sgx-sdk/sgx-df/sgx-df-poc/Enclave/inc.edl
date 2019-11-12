@@ -1,0 +1,18 @@
+enclave
+{
+	trusted 
+	{
+		public int ecall_strlen( void );
+      	public void ecall_memset( [user_check] char *out );
+
+		public void ecall_fill_heap( char c );
+		public void ecall_edger8r( [out,size=100] char *buf);
+
+      	public void ecall_leak_df( int set, int scrub, [user_check] char *p);
+	};
+
+	untrusted {
+	};
+};
+
+

@@ -1,0 +1,42 @@
+From e772539bc4dff9a3caf2e2e8050a6e911f4803e4 Mon Sep 17 00:00:00 2001
+Subject: [PATCH] Sanitize RFLAGS.DF on enclave entry.
+
+According to the x86 ABI, RFLAGS.DF should always be cleared on function
+entry/exit. This patches a vulnerability where manipulating the direction flag
+in the untrusted runtime before entering an enclave, allowed adversaries to
+hijack the direction of trusted x86 string instructions inside the enclave.
+---
+ sdk/trts/linux/trts_pic.S | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/sdk/trts/linux/trts_pic.S b/sdk/trts/linux/trts_pic.S
+index e2d4b04..380d40e 100644
+--- a/sdk/trts/linux/trts_pic.S
++++ b/sdk/trts/linux/trts_pic.S
+@@ -119,6 +119,7 @@ DECLARE_GLOBAL_FUNC enclave_entry
+     /* Clear unused general registers */
+     xor     %xdx, %xdx
+     add     %xdx, %xdx          /* OF = SF = AF = CF = 0; ZF = PF = 1 */
++    cld                         /* DF = 0 as required by x86-64 ABI */
+ #if defined(LINUX64)
+     xor     %r8, %r8
+     xor     %r9, %r9
+@@ -200,6 +201,7 @@ DECLARE_GLOBAL_FUNC enclave_entry
+ 
+     /* Set status flags to pre-defined values */
+     add     %xdx, %xdx          /* OF = SF = AF = CF = 0; ZF = PF = 1 */
++    cld                         /* DF = 0 as required by x86-64 ABI */
+ 
+     /* EEXIT */
+     mov     $SE_EEXIT, %xax     /* EEXIT leaf */
+@@ -389,6 +391,7 @@ DECLARE_LOCAL_FUNC do_ocall
+ 
+     /* Set status flags to pre-defined values */
+     add     %xdx, %xdx          /* OF = SF = AF = CF = 0; ZF = PF = 1 */
++    cld                         /* DF = 0 as required by x86-64 ABI */
+ 
+     ENCLU
+ 
+-- 
+2.7.4
+

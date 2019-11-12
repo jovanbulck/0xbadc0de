@@ -1,0 +1,13 @@
+enclave
+{
+	trusted 
+	{
+		public uint16_t ecall_data_lookup( uint8_t input );
+		public uint16_t ecall_control_flow( uint8_t input );
+	};
+
+	untrusted {
+	};
+};
+
+

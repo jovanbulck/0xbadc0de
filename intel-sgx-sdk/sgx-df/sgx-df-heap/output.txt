@@ -1,0 +1,43 @@
+$ gcc --version
+gcc (Ubuntu 5.4.0-6ubuntu1~16.04.11) 5.4.0 20160609
+Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+$ ./inc 
+Creating enclave...
+--> OK
+
+--------------------------------------------------
+RFLAGS.DF strlen direction hijack
+--------------------------------------------------
+
+Running victim w DF=0
+enclave strlen=1
+
+Running victim w DF=1
+enclave strlen=3
+
+Running victim w DF=0
+enclave strlen=1
+
+Running victim w DF=1
+enclave strlen=3
+
+--------------------------------------------------
+RFLAGS.DF memset direction hijack
+--------------------------------------------------
+
+Running victim w DF=0
+enclave memset=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+Running victim w DF=1
+enclave memset=XAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Running victim w DF=0
+enclave memset=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+Running victim w DF=1
+enclave memset=XAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+all is well; exiting..

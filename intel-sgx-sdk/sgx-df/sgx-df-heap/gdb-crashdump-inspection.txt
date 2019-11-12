@@ -1,0 +1,71 @@
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff5c061be in free ()
+(gdb) disassemble 
+Dump of assembler code for function free:
+   0x00007ffff5c06190 <+0>:	test   %rdi,%rdi
+   0x00007ffff5c06193 <+3>:	je     0x7ffff5c062c5 <free+309>
+   0x00007ffff5c06199 <+9>:	push   %r13
+   0x00007ffff5c0619b <+11>:	push   %r12
+   0x00007ffff5c0619d <+13>:	lea    -0x10(%rdi),%rsi
+   0x00007ffff5c061a1 <+17>:	push   %rbp
+   0x00007ffff5c061a2 <+18>:	push   %rbx
+   0x00007ffff5c061a3 <+19>:	sub    $0x8,%rsp
+   0x00007ffff5c061a7 <+23>:	mov    -0x8(%rdi),%rax
+   0x00007ffff5c061ab <+27>:	mov    0x215b8e(%rip),%rdx        # 0x7ffff5e1bd40 <mparams>
+   0x00007ffff5c061b2 <+34>:	and    $0xfffffffffffffff8,%rax
+   0x00007ffff5c061b6 <+38>:	mov    %rdx,%rbx
+   0x00007ffff5c061b9 <+41>:	xor    -0x10(%rdi,%rax,1),%rbx
+=> 0x00007ffff5c061be <+46>:	cmp    0x40(%rbx),%rdx
+   0x00007ffff5c061c2 <+50>:	jne    0x7ffff5c064e0 <free+848>
+   0x00007ffff5c061c8 <+56>:	testb  $0x2,0x370(%rbx)
+   0x00007ffff5c061cf <+63>:	jne    0x7ffff5c06340 <free+432>
+   0x00007ffff5c061d5 <+69>:	mov    0x18(%rbx),%r9
+   0x00007ffff5c061d9 <+73>:	cmp    %r9,%rsi
+   0x00007ffff5c061dc <+76>:	jb     0x7ffff5c06338 <free+424>
+   0x00007ffff5c061e2 <+82>:	mov    -0x8(%rdi),%rax
+   0x00007ffff5c061e6 <+86>:	mov    %rax,%rcx
+   0x00007ffff5c061e9 <+89>:	and    $0x3,%ecx
+   0x00007ffff5c061ec <+92>:	cmp    $0x1,%rcx
+   0x00007ffff5c061f0 <+96>:	je     0x7ffff5c06338 <free+424>
+   0x00007ffff5c061f6 <+102>:	mov    %rax,%rdx
+   0x00007ffff5c061f9 <+105>:	and    $0xfffffffffffffff8,%rdx
+   0x00007ffff5c061fd <+109>:	test   $0x1,%al
+   0x00007ffff5c061ff <+111>:	lea    (%rsi,%rdx,1),%r8
+   0x00007ffff5c06203 <+115>:	je     0x7ffff5c062d0 <free+320>
+   0x00007ffff5c06209 <+121>:	cmp    %r8,%rsi
+   0x00007ffff5c0620c <+124>:	jae    0x7ffff5c06338 <free+424>
+   0x00007ffff5c06212 <+130>:	mov    0x8(%r8),%rcx
+   0x00007ffff5c06216 <+134>:	test   $0x1,%cl
+   0x00007ffff5c06219 <+137>:	je     0x7ffff5c06338 <free+424>
+   0x00007ffff5c0621f <+143>:	test   $0x2,%cl
+   0x00007ffff5c06222 <+146>:	jne    0x7ffff5c06380 <free+496>
+   0x00007ffff5c06228 <+152>:	cmp    0x28(%rbx),%r8
+   0x00007ffff5c0622c <+156>:	je     0x7ffff5c066b0 <free+1312>
+---Type <return> to continue, or q <return> to quit---q
+Quit
+(gdb) info registers
+rax            0x0	0
+rbx            0xb3848c14da3ce6c8	-5511126022805985592
+rcx            0x64	100
+rdx            0xb3848c14da3ce6c8	-5511126022805985592
+rsi            0x7ffff5e1c000	140737318600704
+rdi            0x7ffff5e1c010	140737318600720
+rbp            0x0	0x0
+rsp            0x7ffff5e3e9e0	0x7ffff5e3e9e0
+r8             0x7ffff5e1b890	140737318598800
+r9             0x7ffff5c089f0	140737316424176
+r10            0x7ffff5e1b888	140737318598792
+r11            0x4	4
+r12            0x7fffffffe1e0	140737488347616
+r13            0x7ffff5e3ec90	140737318743184
+r14            0x0	0
+r15            0x0	0
+rip            0x7ffff5c061be	0x7ffff5c061be <free+46>
+eflags         0x10682	[ SF IF DF RF ]
+cs             0x33	51
+ss             0x2b	43
+ds             0x0	0
+es             0x0	0
+fs             0x0	0
+gs             0x0	0
+(gdb) 

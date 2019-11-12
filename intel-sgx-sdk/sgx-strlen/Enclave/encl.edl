@@ -1,0 +1,17 @@
+enclave {
+    trusted {
+		
+		// To keep the example simple, this ecall will only encrypt the first 16 byte of the string
+		public void encryptString(
+			[in, string] const char *str, 
+			[out]uint8_t ct[16]
+		);
+		
+		// Helpers for debugging / sgx-step
+		public void *getEncryptStringAdrs(void);
+		public uint64_t getArrayAddress(void);
+#if 0
+		public uint64_t strlenOracle(uint64_t p);
+#endif
+    };
+};

@@ -1,0 +1,29 @@
+From f2a39d013626f064ac2eb55b9e868e16a1c55f84 Mon Sep 17 00:00:00 2001
+Subject: [PATCH 1/1] Eliminate #AC enclave side-channel leakage.
+
+We now always clear the x86 Alignment Check flag (RFLAGS.AC) on enclave entry
+to prevent unintended side-channel leakage when dereferencing unaligned
+pointers during enclaved execution.
+
+---
+ sdk/trts/linux/trts_pic.S | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/sdk/trts/linux/trts_pic.S b/sdk/trts/linux/trts_pic.S
+index e2d4b04..05d9ce5 100644
+--- a/sdk/trts/linux/trts_pic.S
++++ b/sdk/trts/linux/trts_pic.S
+@@ -144,6 +144,10 @@ DECLARE_GLOBAL_FUNC enclave_entry
+     push    %xcx
+     push    %xbp
+ 
++    pushf
++    andl $~(0x40000),(%xsp)             /* eliminate #AC side-channel leakage */
++    popf
++
+     .cfi_def_cfa_offset   2 * SE_WORDSIZE
+     .cfi_offset           xbp, -2 * SE_WORDSIZE
+     mov     %xsp, %xbp
+-- 
+2.7.4
+

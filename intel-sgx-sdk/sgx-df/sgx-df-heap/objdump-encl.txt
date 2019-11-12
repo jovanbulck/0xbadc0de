@@ -1,0 +1,79 @@
+0000000000000f1a <ecall_strlen>:
+     f1a:	48 8d 3d e3 a0 21 00 	lea    0x21a0e3(%rip),%rdi        # 21b004 <buf+0x4>
+     f21:	31 c0                	xor    %eax,%eax
+     f23:	48 83 c9 ff          	or     $0xffffffffffffffff,%rcx
+     f27:	f2 ae                	repnz scas %es:(%rdi),%al
+     f29:	48 89 c8             	mov    %rcx,%rax
+     f2c:	48 f7 d0             	not    %rax
+     f2f:	48 ff c8             	dec    %rax
+     f32:	c3                   	retq   
+
+0000000000000f73 <ecall_memset>:
+     f73:	48 8d 57 32          	lea    0x32(%rdi),%rdx
+     f77:	b9 32 00 00 00       	mov    $0x32,%ecx
+     f7c:	b0 41                	mov    $0x41,%al
+     f7e:	48 89 d7             	mov    %rdx,%rdi
+     f81:	f3 aa                	rep stos %al,%es:(%rdi)
+     f83:	c3                   	retq   
+
+0000000000000f2a <sgx_ecall_edger8r>:
+     f2a:	48 85 ff             	test   %rdi,%rdi
+     f2d:	55                   	push   %rbp
+     f2e:	53                   	push   %rbx
+     f2f:	51                   	push   %rcx
+     f30:	75 0a                	jne    f3c <sgx_ecall_edger8r+0x12>
+     f32:	bd 02 00 00 00       	mov    $0x2,%ebp
+     f37:	e9 96 00 00 00       	jmpq   fd2 <sgx_ecall_edger8r+0xa8>
+     f3c:	be 08 00 00 00       	mov    $0x8,%esi
+     f41:	48 89 fb             	mov    %rdi,%rbx
+     f44:	e8 a7 02 00 00       	callq  11f0 <sgx_is_outside_enclave>
+     f49:	85 c0                	test   %eax,%eax
+     f4b:	74 e5                	je     f32 <sgx_ecall_edger8r+0x8>
+     f4d:	0f ae e8             	lfence 
+     f50:	48 8b 2b             	mov    (%rbx),%rbp
+     f53:	48 85 ed             	test   %rbp,%rbp
+     f56:	75 0c                	jne    f64 <sgx_ecall_edger8r+0x3a>
+     f58:	31 db                	xor    %ebx,%ebx
+     f5a:	48 85 ed             	test   %rbp,%rbp
+     f5d:	0f ae e8             	lfence 
+     f60:	75 15                	jne    f77 <sgx_ecall_edger8r+0x4d>
+     f62:	eb 31                	jmp    f95 <sgx_ecall_edger8r+0x6b>
+     f64:	be 64 00 00 00       	mov    $0x64,%esi
+     f69:	48 89 ef             	mov    %rbp,%rdi
+     f6c:	e8 7f 02 00 00       	callq  11f0 <sgx_is_outside_enclave>
+     f71:	85 c0                	test   %eax,%eax
+     f73:	74 bd                	je     f32 <sgx_ecall_edger8r+0x8>
+     f75:	eb e1                	jmp    f58 <sgx_ecall_edger8r+0x2e>
+     f77:	bf 64 00 00 00       	mov    $0x64,%edi
+     f7c:	e8 2f 38 00 00       	callq  47b0 <dlmalloc>
+     f81:	48 85 c0             	test   %rax,%rax
+     f84:	48 89 c3             	mov    %rax,%rbx
+     f87:	74 40                	je     fc9 <sgx_ecall_edger8r+0x9f>
+     f89:	b9 19 00 00 00       	mov    $0x19,%ecx
+     f8e:	31 c0                	xor    %eax,%eax
+     f90:	48 89 df             	mov    %rbx,%rdi
+     f93:	f3 ab                	rep stos %eax,%es:(%rdi)
+     f95:	48 89 df             	mov    %rbx,%rdi
+     f98:	e8 8c ff ff ff       	callq  f29 <ecall_edger8r>
+     f9d:	48 85 db             	test   %rbx,%rbx
+     fa0:	74 2e                	je     fd0 <sgx_ecall_edger8r+0xa6>
+     fa2:	48 89 ef             	mov    %rbp,%rdi
+     fa5:	b9 64 00 00 00       	mov    $0x64,%ecx
+     faa:	48 89 da             	mov    %rbx,%rdx
+     fad:	be 64 00 00 00       	mov    $0x64,%esi
+     fb2:	31 ed                	xor    %ebp,%ebp
+     fb4:	e8 f7 6a 00 00       	callq  7ab0 <memcpy_s>
+     fb9:	48 89 df             	mov    %rbx,%rdi
+     fbc:	85 c0                	test   %eax,%eax
+     fbe:	40 0f 95 c5          	setne  %bpl
+     fc2:	e8 c9 51 00 00       	callq  6190 <dlfree>
+     fc7:	eb 09                	jmp    fd2 <sgx_ecall_edger8r+0xa8>
+     fc9:	bd 03 00 00 00       	mov    $0x3,%ebp
+     fce:	eb 02                	jmp    fd2 <sgx_ecall_edger8r+0xa8>
+     fd0:	31 ed                	xor    %ebp,%ebp
+     fd2:	89 e8                	mov    %ebp,%eax
+     fd4:	5a                   	pop    %rdx
+     fd5:	5b                   	pop    %rbx
+     fd6:	5d                   	pop    %rbp
+     fd7:	c3                   	retq   
+

@@ -16,3 +16,15 @@
 [submodule "graphene/entry-stack/graphene"]
 	path = graphene/entry-stack/graphene
 	url = https://github.com/oscarlab/graphene.git
+[submodule "intel-sgx-sdk/sgx-ac/linux-sgx"]
+	path = intel-sgx-sdk/sgx-ac/linux-sgx
+	url = https://github.com/intel/linux-sgx.git
+[submodule "intel-sgx-sdk/sgx-df/linux-sgx"]
+	path = intel-sgx-sdk/sgx-df/linux-sgx
+	url = https://github.com/intel/linux-sgx.git
+[submodule "intel-sgx-sdk/sgx-strlen/sgx-step"]
+	path = intel-sgx-sdk/sgx-strlen/sgx-step
+	url = https://github.com/jovanbulck/sgx-step.git
+[submodule "intel-sgx-sdk/sgx-strlen/linux-sgx"]
+	path = intel-sgx-sdk/sgx-strlen/linux-sgx
+	url = https://github.com/intel/linux-sgx.git

@@ -1,0 +1,85 @@
+[===] Enclave [===]
+[RM] inc.o inc.unsigned.so inc.so libinc_proxy.a
+[RM] inc_t.o inc_u.o inc_t.h inc_t.c inc_u.h inc_u.c
+[RM] main.o inc
+[===] Enclave [===]
+[GEN] sgx_edger8r inc.edl
+[CC]  inc_t.c (trusted edge)
+[CC]  inc.c (core)
+[LD]   inc.o inc_t.o -lsgx_trts inc.unsigned.so
+[SGN] inc.unsigned.so
+[CC]  inc_u.c (untrusted edge)
+[AR]   libinc_proxy.a
+[CC]  main.c
+[LD] main.o -o inc
+Creating enclave...
+--> OK
+
+--------------------------------------------------
+RFLAGS.DF strlen direction hijack
+--------------------------------------------------
+
+Running victim w DF=0
+enclave strlen=1
+
+Running victim w DF=1
+enclave strlen=3
+
+Running victim w DF=0
+enclave strlen=1
+
+Running victim w DF=1
+enclave strlen=3
+
+--------------------------------------------------
+RFLAGS.DF memset direction hijack
+--------------------------------------------------
+
+Running victim w DF=0
+enclave memset=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+Running victim w DF=1
+enclave memset=XAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Running victim w DF=0
+enclave memset=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+Running victim w DF=1
+enclave memset=XAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+--------------------------------------------------
+RFLAGS.DF side-channel leakage EEXIT/AEX
+--------------------------------------------------
+Registering fault handler...
+
+Running victim w set=0; scrub=0
+RFLAGS after AEX=0x202   (DF=0)
+RFLAGS after EEXIT=0x246 (DF=0)
+
+Running victim w set=1; scrub=0
+RFLAGS after AEX=0x602   (DF=1)
+RFLAGS after EEXIT=0x646 (DF=1)
+
+Running victim w set=0; scrub=1
+RFLAGS after AEX=0x202   (DF=0)
+RFLAGS after EEXIT=0x246 (DF=0)
+
+Running victim w set=1; scrub=1
+RFLAGS after AEX=0x602   (DF=1)
+RFLAGS after EEXIT=0x246 (DF=0)
+
+--------------------------------------------------
+RFLAGS.DF edger8r memset heap corruption
+--------------------------------------------------
+
+Spraying enclave heap with secret 'S'
+Running victim w DF=0
+--> OK
+enclave output buf=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+Spraying enclave heap with secret 'S'
+Running victim w DF=1
+--> FAIL
+enclave output buf=0000SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
+page fault when dereferencing (nil); exiting..

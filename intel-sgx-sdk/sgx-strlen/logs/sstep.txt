@@ -1,0 +1,2682 @@
+[===] Enclave [===]
+[RM] encl.o encl.unsigned.so encl.so libencl_proxy.a
+[RM] encl_t.o encl_u.o encl_t.h encl_t.c encl_u.h encl_u.c
+[===] ./sgx-step//libsgxstep [===]
+[RM] apic.o cpu.o debug.o enclave.o file.o foreshadow.o gdt.o idt.o pt.o sched.o spy.o aep_trampoline.o irq_entry.o rtm.o transient.o libsgx-step.a
+[RM] main.o app
+[===] Enclave [===]
+[GEN] ../sgx_edger8r_vulnerable encl.edl
+[CC]  encl_t.c (trusted edge)
+[CC]  encl.c (core)
+[LD]   encl.o encl_t.o -lsgx_trts encl.unsigned.so
+[SGN] encl.unsigned.so
+[CC]  encl_u.c (untrusted edge)
+[AR]   libencl_proxy.a
+[===] ./sgx-step//libsgxstep [===]
+[CC]  apic.c
+[CC]  cpu.c
+[CC]  debug.c
+[CC]  enclave.c
+[CC]  file.c
+[CC]  foreshadow.c
+[CC]  gdt.c
+[CC]  idt.c
+[CC]  pt.c
+[CC]  sched.c
+[CC]  spy.c
+[AS]  aep_trampoline.S
+[AS]  irq_entry.S
+[AS]  rtm.S
+[AS]  transient.S
+[AR]  libsgx-step.a
+[CC]  main.c
+[LD] main.o -o app
+[main.c] Creating enclave...
+[pt.c] /dev/sgx-step opened!
+[sched.c] continuing on CPU 1
+[idt.c] DTR.base=0xfffffe0000000000/size=4095 (256 entries)
+[pt.c] /dev/mem opened!
+[idt.c] established user space IDT mapping at 0x7f2d384dd000
+[idt.c] installed IRQ handler with target_rip=(nil)
+[idt.c] IDT[ 45] @0x7f2d384dd2d0 = 0x404640 (seg sel 0x33); p=1; dpl=3; type=15; ist=0
+[apic.c] established local memory mapping for APIC_BASE=0xfee00000 at 0x7f2d384d9000
+[apic.c] APIC_ID=2000000; LVTT=2d; TDCR=0
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 0
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 1
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 2
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 3
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 4
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 5
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 6
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 7
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 19 for 8
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 9
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 10
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 11
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 12
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 13
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 14
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 15
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 16
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 17
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 18
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 19
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 20
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 21
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 22
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 23
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 24
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 25
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 26 for key byte 0 = 13-> NEW!
+Current rk10 = 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 27
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 28
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 29
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 30
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 31
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 32
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 33
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 31 for 34
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 35
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 36
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 37
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 38
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 39
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 27 for 40
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 41
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 42
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 43
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 44
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 45 for key byte 13 = 2b-> NEW!
+Current rk10 = 13 00 00 00 00 00 00 00 00 00 00 00 00 2b 00 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 46
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 47
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 48
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 49
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 50
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 51
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 52
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 53 for key byte 0 = 13-> already known
+Current rk10 = 13 00 00 00 00 00 00 00 00 00 00 00 00 2b 00 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 54
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 55
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 56
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 57
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 58
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 59 for key byte 9 = 07-> NEW!
+Current rk10 = 13 00 00 00 00 00 00 00 00 07 00 00 00 2b 00 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 60
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 61
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 62
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 63
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 64 for key byte 3 = 7f-> NEW!
+Current rk10 = 13 00 00 7f 00 00 00 00 00 07 00 00 00 2b 00 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 65
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 66
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 67
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 68 for key byte 8 = f3-> NEW!
+Current rk10 = 13 00 00 7f 00 00 00 00 f3 07 00 00 00 2b 00 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 69
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 70
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 21 for 71
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 72
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 73
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 74
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 29 for 75
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 76
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 77
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 78
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 79
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 80
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 81
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 82
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 83
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 84
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 85 for key byte 14 = 30-> NEW!
+Current rk10 = 13 00 00 7f 00 00 00 00 f3 07 00 00 00 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 86
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 19 for 87
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 88
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 89
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 90
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 91 for key byte 13 = 2b-> already known
+Current rk10 = 13 00 00 7f 00 00 00 00 f3 07 00 00 00 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 92
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 93
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 94
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 95 for key byte 4 = e3-> NEW!
+Current rk10 = 13 00 00 7f e3 00 00 00 f3 07 00 00 00 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 96
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 97
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 98
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 99
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 100
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 101
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 102
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 103
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 104
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 105
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 106
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 107
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 28 for 108
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 109 for key byte 13 = 2b-> already known
+Current rk10 = 13 00 00 7f e3 00 00 00 f3 07 00 00 00 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 110
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 111
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 112
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 113 for key byte 7 = 17-> NEW!
+Current rk10 = 13 00 00 7f e3 00 00 17 f3 07 00 00 00 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 114
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 115
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 116
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 20 for 117
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 118
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 119
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 120
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 121
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 122
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 123
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 124
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 125
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 126
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 127
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 128
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 129
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 130
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 131
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 132
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 133
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 134
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 135
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 136
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 137
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 138
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 139
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 140
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 141
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 142
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 143
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 144
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 27 for 145
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 146
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 147
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 28 for 148
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 149
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 150
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 151
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 152
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 153
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 154
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 155
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 156
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 29 for 157
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 158
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 159
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 160
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 161
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 24 for 162
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 163
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 164
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 165
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 166
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 167
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 168
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 169
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 170
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 171
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 172
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 173
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 174
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 175
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 176
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 177
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 178
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 179
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 180
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 181
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 182
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 183
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 184
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 185
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 186
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 23 for 187
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 188
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 189
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 190
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 191
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 192
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 193
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 194 for key byte 12 = 4d-> NEW!
+Current rk10 = 13 00 00 7f e3 00 00 17 f3 07 00 00 4d 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 195
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 196
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 197
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 198
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 199
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 200
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 201
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 202
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 203
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 204 for key byte 8 = f3-> already known
+Current rk10 = 13 00 00 7f e3 00 00 17 f3 07 00 00 4d 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 205
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 206
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 207
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 208
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 209
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 210
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 211
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 212
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 213
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 214
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 215
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 216
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 217
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 218
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 219
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 220
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 221
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 222 for key byte 11 = 8b-> NEW!
+Current rk10 = 13 00 00 7f e3 00 00 17 f3 07 00 8b 4d 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 223
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 224
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 225
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 226
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 227
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 228
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 229
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 230
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 231
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 232
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 233
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 234
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 235
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 236
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 237
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 238
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 239
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 240
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 241
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 242
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 243
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 244
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 245
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 246
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 247
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 24 for 248
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 249
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 250
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 251
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 252
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 253
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 254
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 255
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 256
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 257 for key byte 7 = 17-> already known
+Current rk10 = 13 00 00 7f e3 00 00 17 f3 07 00 8b 4d 2b 30 00 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 258
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 259
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 260
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 261
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 262
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 263
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 264
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 265
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 266
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 267
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 268
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 269
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 270
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 271
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 272
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 273
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 274
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 275
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 276
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 277
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 278
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 279
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 280
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 281
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 282
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 283
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 284
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 285
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 286
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 16 for 287
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 288
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 289
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 290
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 291
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 292
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 293
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 294
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 295 for key byte 15 = c5-> NEW!
+Current rk10 = 13 00 00 7f e3 00 00 17 f3 07 00 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 296
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 297
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 21 for 298
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 299
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 300
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 301
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 302
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 303
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 304
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 305
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 306
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 307
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 308
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 309
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 310
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 311
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 312
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 313
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 314
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 315
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 316
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 317
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 318
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 319
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 320
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 321
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 322
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 323
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 324
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 325
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 326
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 327
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 28 for 328
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 329 for key byte 14 = 30-> already known
+Current rk10 = 13 00 00 7f e3 00 00 17 f3 07 00 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 330
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 331
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 332
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 333
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 334
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 335
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 336
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 337
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 338
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 21 for 339
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 340
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 341
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 342
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 343
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 344
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 345
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 346
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 347
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 348
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 349
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 350
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 351
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 352
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 353 for key byte 10 = a7-> NEW!
+Current rk10 = 13 00 00 7f e3 00 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 354
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 355
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 356
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 357
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 358
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 359
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 360
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 361
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 362
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 363
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 364
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 365
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 366
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 367
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 368
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 369
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 370
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 371
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 372
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 373
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 374
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 375
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 27 for 376
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 377
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 378
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 379
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 380
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 381
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 382
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 383 for key byte 5 = 94-> NEW!
+Current rk10 = 13 00 00 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 384
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 385
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 25 for 386
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 387
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 388
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 389
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 390
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 391 for key byte 2 = 1d-> NEW!
+Current rk10 = 13 00 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 392
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 393
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 394
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 395 for key byte 4 = e3-> already known
+Current rk10 = 13 00 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 396
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 397
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 398
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 399
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 400
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 401
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 402
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 403 for key byte 10 = a7-> already known
+Current rk10 = 13 00 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 404
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 405
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 406
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 407
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 30 for 408
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 409
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 410
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 411
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 412
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 413
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 414
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 415
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 416
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 417
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 418
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 419
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 420
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 421
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 422
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 423
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 424
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 425
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 426
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 427
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 428
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 429
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 430
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 431
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 432
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 433
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 434
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 435
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 436
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 437
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 438
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 439
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 440 for key byte 1 = 11-> NEW!
+Current rk10 = 13 11 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 441 for key byte 1 = 11-> already known
+Current rk10 = 13 11 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 442
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 443
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 444
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 21 for 445
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 446
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 27 for 447
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 448
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 449
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 450
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 451
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 452
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 453
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 454
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 455
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 456
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 457 for key byte 2 = 1d-> already known
+Current rk10 = 13 11 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 458
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 459
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 460 for key byte 14 = 30-> already known
+Current rk10 = 13 11 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 461
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 462
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 463
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 464
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 465
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 466
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 467
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 468
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 469
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 470
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 471
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 472
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 26 for 473
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 474
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 475
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 476
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 477
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 478
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 479 for key byte 15 = c5-> already known
+Current rk10 = 13 11 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 480
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 481
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 482
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 483
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 484
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 485
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 486
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 487
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 488
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 489
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 490
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 491
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 492
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 493
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 494
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 495
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 18 for 496
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 497
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 498
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 499
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 500
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 501
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 502
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 503
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 504
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 505
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 506
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 507
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 508
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 509
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 510
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 511
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 512
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 513
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 514
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 20 for 515
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 516
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 517
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 518
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useless leakage 48 for 519
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 520 for key byte 15 = c5-> already known
+Current rk10 = 13 11 1d 7f e3 94 00 17 f3 07 a7 8b 4d 2b 30 c5 
+[sched.c] continuing on CPU 1
+[apic.c] APIC timer one-shot mode with division 2 (lvtt=2d/tdcr=0)
+[apic.c] Restored APIC_LVTT=2d/TDCR=0)
+[file.c] writing buffer to '/dev/cpu/1/msr' (size=8)
+Useful leak at 521 for key byte 6 = 4a-> NEW!
+All round key bytes found after 522 plaintexts
+Current rk10 = 13 11 1d 7f e3 94 4a 17 f3 07 a7 8b 4d 2b 30 c5 
