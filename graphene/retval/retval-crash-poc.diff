@@ -1,0 +1,139 @@
+diff --git a/LibOS/shim/test/native/manifest.template b/LibOS/shim/test/native/manifest.template
+index 6714c1c..f405c60 100644
+--- a/LibOS/shim/test/native/manifest.template
++++ b/LibOS/shim/test/native/manifest.template
+@@ -11,6 +11,10 @@ fs.mount.bin.type = chroot
+ fs.mount.bin.path = /bin
+ fs.mount.bin.uri = file:/bin
+ 
++fs.mount.home.type = chroot
++fs.mount.home.path = /home/user
++fs.mount.home.uri = file:/home/user
++
+ sys.brk.size = 32M
+ sys.stack.size = 4M
+ 
+@@ -25,5 +29,5 @@ sgx.trusted_files.libc = file:$(LIBCDIR)/libc.so.6
+ sgx.trusted_files.libdl = file:$(LIBCDIR)/libdl.so.2
+ sgx.trusted_files.libm = file:$(LIBCDIR)/libm.so.6
+ sgx.trusted_files.libpthread = file:$(LIBCDIR)/libpthread.so.0
+-
+ sgx.trusted_files.unix_pipe = file:unix.c
++
+diff --git a/Pal/src/host/Linux-SGX/db_files.c b/Pal/src/host/Linux-SGX/db_files.c
+index e7655ca..e494843 100644
+--- a/Pal/src/host/Linux-SGX/db_files.c
++++ b/Pal/src/host/Linux-SGX/db_files.c
+@@ -463,6 +463,7 @@ static int64_t dir_read (PAL_HANDLE handle, uint64_t offset, uint64_t count,
+             break;
+ 
+         int size = ocall_getdents(handle->dir.fd, dent_buf, DIRBUF_SIZE);
++	printf("db_files.c: ocall_getdents(fd, %p, %d) = %d\n", dent_buf, DIRBUF_SIZE, size);
+ 
+         if (size < 0)
+             return size;
+diff --git a/Pal/src/host/Linux-SGX/enclave_ocalls.c b/Pal/src/host/Linux-SGX/enclave_ocalls.c
+index 133de40..7c7a60c 100644
+--- a/Pal/src/host/Linux-SGX/enclave_ocalls.c
++++ b/Pal/src/host/Linux-SGX/enclave_ocalls.c
+@@ -377,20 +377,27 @@ int ocall_mkdir (const char * pathname, unsigned short mode)
+     return retval;
+ }
+ 
++
+ int ocall_getdents (int fd, struct linux_dirent64 * dirp, unsigned int size)
+ {
+     int retval = 0;
+     ms_ocall_getdents_t * ms;
+     OCALLOC(ms, ms_ocall_getdents_t *, sizeof(*ms));
+ 
++
+     ms->ms_fd = fd;
+     ms->ms_dirp = ALLOC_IN_USER(dirp, size);
+     ms->ms_size = size;
+-
++   
+     retval = SGX_OCALL(OCALL_GETDENTS, ms);
++
+     if (retval > 0)
+         COPY_FROM_USER(dirp, ms->ms_dirp, retval);
+     OCALL_EXIT();
++    
++    printf("enclave_ocalls.c: ocall_getdents(%p) = %d\n", ms, retval);
++    printf("enclave_ocalls.c: Copied %d byte from %p to %p\n", retval, ms->ms_dirp, dirp);
++
+     return retval;
+ }
+ 
+diff --git a/Pal/src/host/Linux-SGX/sgx-driver b/Pal/src/host/Linux-SGX/sgx-driver
+--- a/Pal/src/host/Linux-SGX/sgx-driver
++++ b/Pal/src/host/Linux-SGX/sgx-driver
+@@ -1 +1 @@
+-Subproject commit 4d0dc8bd261567aa3b69170eeacca076cbe9799b
++Subproject commit 4d0dc8bd261567aa3b69170eeacca076cbe9799b-dirty
+diff --git a/Pal/src/host/Linux-SGX/sgx_enclave.c b/Pal/src/host/Linux-SGX/sgx_enclave.c
+index 55600d0..66daad6 100644
+--- a/Pal/src/host/Linux-SGX/sgx_enclave.c
++++ b/Pal/src/host/Linux-SGX/sgx_enclave.c
+@@ -119,7 +119,12 @@ static int sgx_ocall_read(void * pms)
+     int ret;
+     ODEBUG(OCALL_READ, ms);
+     ret = INLINE_SYSCALL(read, 3, ms->ms_fd, ms->ms_buf, ms->ms_count);
+-    return IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
++	
++	printf("read(fs, %p, %d) = %d\n", ms->ms_buf, ms->ms_count, ret);
++	
++    int returnval = IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
++	
++	return returnval;
+ }
+ 
+ static int sgx_ocall_write(void * pms)
+@@ -210,11 +215,31 @@ static int sgx_ocall_mkdir(void * pms)
+ 
+ static int sgx_ocall_getdents(void * pms)
+ {
++	static int prev_was_72 = 0;
++	
+     ms_ocall_getdents_t * ms = (ms_ocall_getdents_t *) pms;
+     int ret;
+     ODEBUG(OCALL_GETDENTS, ms);
+     ret = INLINE_SYSCALL(getdents64, 3, ms->ms_fd, ms->ms_dirp, ms->ms_size);
+-    return IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
++	
++	printf("sgx_enclave.c: getdents64(fs, %p, %d) = %d\n", ms->ms_dirp, ms->ms_size, ret);
++	
++	int returnval = IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
++	
++	if(returnval == 72)
++	{
++		prev_was_72 = 1;
++		printf("sgx_enclave.c: Will fault the next 0-byte read!\n");
++	}
++	else if(returnval == 0 && prev_was_72 == 1)
++	{
++		printf("sgx_enclave.c: Faulting this ocall!\n");
++		return 2048;
++	}
++	
++	
++	return returnval;
++	
+ }
+ 
+ static int sgx_ocall_wake_thread(void * pms)
+diff --git a/Pal/src/host/Linux-SGX/sgx_framework.c b/Pal/src/host/Linux-SGX/sgx_framework.c
+index 7a63a0e..08cdb0b 100644
+--- a/Pal/src/host/Linux-SGX/sgx_framework.c
++++ b/Pal/src/host/Linux-SGX/sgx_framework.c
+@@ -357,8 +357,10 @@ int init_enclave(sgx_arch_secs_t * secs,
+             error = "Invalid measurement";        break;
+         case SGX_INVALID_SIGNATURE:
+             error = "Invalid signature";          break;
++#if 0
+         case SGX_INVALID_LICENSE:
+             error = "Invalid EINIT token";        break;
++#endif
+         case SGX_INVALID_CPUSVN:
+             error = "Invalid CPU SVN";            break;
+         default:

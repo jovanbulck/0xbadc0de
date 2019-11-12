@@ -10,3 +10,9 @@
 [submodule "sgx-lkl/sgx-lkl"]
 	path = sgx-lkl/sgx-lkl
 	url = https://github.com/lsds/sgx-lkl.git
+[submodule "graphene/graphene"]
+	path = graphene/graphene
+	url = https://github.com/oscarlab/graphene.git
+[submodule "graphene/entry-stack/graphene"]
+	path = graphene/entry-stack/graphene
+	url = https://github.com/oscarlab/graphene.git
