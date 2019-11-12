@@ -1,0 +1,4 @@
+$ make run
+host/helloworldhost ./enclave/helloworldenc.signed
+ecall_strlen() with DF = 0 returned 1
+ecall_strlen() with DF = 1 returned 3

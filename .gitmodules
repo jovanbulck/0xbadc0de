@@ -28,3 +28,9 @@
 [submodule "intel-sgx-sdk/sgx-strlen/linux-sgx"]
 	path = intel-sgx-sdk/sgx-strlen/linux-sgx
 	url = https://github.com/intel/linux-sgx.git
+[submodule "microsoft-oe/openenclave_93ac"]
+	path = microsoft-oe/openenclave_93ac
+	url = https://github.com/openenclave/openenclave.git
+[submodule "microsoft-oe/openenclave_v041"]
+	path = microsoft-oe/openenclave_v041
+	url = https://github.com/openenclave/openenclave.git
