@@ -1,0 +1,212 @@
+diff --git a/apps/helloworld/helloworld.c b/apps/helloworld/helloworld.c
+index 61edb0c..f71b36e 100644
+--- a/apps/helloworld/helloworld.c
++++ b/apps/helloworld/helloworld.c
+@@ -2,11 +2,20 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <stdint.h>
+ 
+ #define HW_FILE "/app/helloworld.txt"
+ 
++char* secret = "\4\0\0\0super secret string";
++
+ int main(int argc, char **argv)
+ {
++
++    printf("enclave: super secret string at %p\n", secret);
++
++    uint64_t tsc = __builtin_ia32_rdtsc();
++    printf("tsc = %lx\n", tsc);
++
+     char buf[100];
+     FILE *f = fopen(HW_FILE, "r");
+     if (!f) {
+@@ -14,6 +23,7 @@ int main(int argc, char **argv)
+         exit(1);
+     }
+ 
++
+     // Prints first line of file /app/helloworld.txt (max 100 characters)
+     if (fgets(buf, sizeof(buf), f) == buf) {
+         printf("%s", buf);
+diff --git a/lkl b/lkl
+--- a/lkl
++++ b/lkl
+@@ -1 +1 @@
+-Subproject commit 58dc2025bf469d880d76250e682dd8e4ed225a6b
++Subproject commit 58dc2025bf469d880d76250e682dd8e4ed225a6b-dirty
+diff --git a/src/main/sgxlkl_run.c b/src/main/sgxlkl_run.c
+index 0051772..cedbcce 100644
+--- a/src/main/sgxlkl_run.c
++++ b/src/main/sgxlkl_run.c
+@@ -55,6 +55,8 @@
+ 
+ extern char __sgxlklrun_text_segment_start;
+ 
++static uint64_t ubase_global = 0;
++
+ #if DEBUG
+ 
+ #include "sgxlkl_host_debug.h"
+@@ -72,6 +74,8 @@ static const char* const _enclave_exit_reasons[] = {
+     "DORESUME"
+ };
+ 
++
++
+ static unsigned long _host_syscall_stats[MAX_SYSCALL_NUMBER];
+ static int _sigint_handling = 0;
+ 
+@@ -356,7 +360,8 @@ void *host_syscall_thread(void *v) {
+             curr_print_lock = NULL;
+         }
+ 
+-#ifdef DEBUG
++#ifdef DEBUG		
++		
+         if (getenv_bool("SGXLKL_TRACE_SYSCALL", 0) || getenv_bool("SGXLKL_TRACE_HOST_SYSCALL", 0)) {
+             pthread_spin_lock(&__stdout_print_lock);
+             log_host_syscall(syscallno, scall[i].ret_val, scall[i].arg1, scall[i].arg2, scall[i].arg3, scall[i].arg4, scall[i].arg5, scall[i].arg6);
+@@ -900,6 +905,17 @@ void forward_signal(int signum, void *handler_arg) {
+     siginfo.signum = signum;
+     siginfo.arg = handler_arg;
+     arg = &siginfo;
++	
++	printf("sgxlkl_run.c: Forward signal with siginfo at %p, signum = %d, siginfo.arg = %p\n", &siginfo, siginfo.signum, siginfo.arg);
++	
++	if(siginfo.signum == SIGILL)
++	{
++		siginfo.signum = SIGSEGV;
++		siginfo.arg = ubase_global + 0x2678AA0;
++		arg = siginfo.arg;
++		printf("Oho, I will modify it then to %p\n", siginfo.arg);
++	}		
++	
+ reenter:
+     if (__state_exiting) return;
+     enter_enclave(my_tcs_id, call_id, arg, ret);
+@@ -914,6 +930,7 @@ reenter:
+             goto reenter;
+         }
+         case SGXLKL_EXIT_DORESUME: {
++			printf("DORESUME\n");
+             return;
+         }
+         case SGXLKL_EXIT_TERMINATE: {
+@@ -930,6 +947,7 @@ reenter:
+ void sigill_handler(int sig, siginfo_t *si, void *unused) {
+     uint64_t low, high;
+     uint64_t rsi;
++	//printf("SIGILL\n");
+     /* do rdtsc just in case */
+     __asm("rdtscp" : "=a"(low), "=d"(high) : : "rcx");
+     rsi = (high << 32) + low;
+@@ -938,6 +956,16 @@ void sigill_handler(int sig, siginfo_t *si, void *unused) {
+ 
+ void sigsegv_handler(int sig, siginfo_t *si, void *unused) {
+     // Just forward signal
++	printf("SIGSEV, %p\n", unused);
++	
++	uint8_t* dump = unused;
++	
++	for(unsigned int i = 0; i < sizeof(siginfo_t); i++)
++	{
++		printf("%02x ", dump[i]);
++	}
++	printf("\n");
++	
+     forward_signal(SIGSEGV, (void*) si);
+ }
+ #endif
+@@ -1255,7 +1283,10 @@ int main(int argc, char *argv[], char *envp[]) {
+             sgxlkl_fail("Heap size but no enclave signing key specified. Please specify a signing key via SGXLKL_KEY.\n");
+         enclave_update_heap(enclave_start, getenv_uint64("SGXLKL_HEAP", DEFAULT_HEAP_SIZE, ULONG_MAX), getenv("SGXLKL_KEY"));
+     }
+-    create_enclave_mem(enclave_start, getenv_bool("SGXLKL_NON_PIE", 0), &__sgxlklrun_text_segment_start);
++	
++     uint64_t ubase = create_enclave_mem(enclave_start, getenv_bool("SGXLKL_NON_PIE", 0), &__sgxlklrun_text_segment_start);
++     printf("ubase = %p\n", ubase);
++	 ubase_global = ubase;
+ 
+     // Check if there are enough TCS for all ethreads.
+     int num_tcs = get_tcs_num();
+@@ -1353,6 +1384,7 @@ int main(int argc, char *argv[], char *envp[]) {
+         }
+     }
+ 
++
+ #ifdef SGXLKL_HW
+     /* Once an enclave thread calls exit in HW mode we exit anyway. */
+     for (i = 0; i < ntenclave; i++)
+diff --git a/src/sgx/enclave_signal.c b/src/sgx/enclave_signal.c
+index 1e4c5f5..25c90aa 100644
+--- a/src/sgx/enclave_signal.c
++++ b/src/sgx/enclave_signal.c
+@@ -15,6 +15,9 @@ static int handle_sigill(gprsgx_t *regs, void *arg);
+ static int handle_sigsegv(gprsgx_t *regs, void *arg);
+ 
+ void __enclave_signal_handler(gprsgx_t *regs, enclave_signal_info_t *siginfo) {
++	
++	//printf("enclave_signal.c: Got signal with siginfo at %p, signum = %d, siginfo->arg = %p\n", siginfo, siginfo->signum, siginfo->arg);
++	
+     set_eh_handling(1);
+ 
+     struct lthread *lt = lthread_self();
+@@ -26,14 +29,19 @@ void __enclave_signal_handler(gprsgx_t *regs, enclave_signal_info_t *siginfo) {
+     int ret;
+     switch (siginfo->signum) {
+     case SIGSEGV:
++		//printf("SIGSEV: ");
+         ret = handle_sigsegv(regs, siginfo->arg);
+         break;
+     case SIGILL:
++		//printf("SIGILL: ");
+         ret = handle_sigill(regs, siginfo->arg);
+         break;
+     default:
++	    //printf("Other: ");
+         ret = -1;
+     }
++	
++	//printf("ret = %d\n", ret);
+ 
+     // Restore lthread state
+     lt->attr.state = lt_old_state;
+@@ -77,9 +85,18 @@ static int handle_sigsegv(gprsgx_t *regs, void *arg) {
+     u.uc_mcontext.gregs[REG_R13] = regs->r13;
+     u.uc_mcontext.gregs[REG_R14] = regs->r14;
+     u.uc_mcontext.gregs[REG_R15] = regs->r15;
+-
++	
++	printf("Now calling the segv_handler, arg was %p...\n", arg);
++	uint8_t* dump = &si;
++	
++	for(unsigned int i = 0; i < sizeof(siginfo_t); i++)
++	{
++		printf("%02x ", dump[i]);
++	}
++	printf("\n");
++	
+     (*segv_handler)(si.si_signo, &si, &u);
+-
++	
+     /* Restore the register values to the changed values */
+ 
+     regs->rdi = u.uc_mcontext.gregs[REG_RDI];
+diff --git a/src/sgx/sgx.c b/src/sgx/sgx.c
+index 560775c..214023c 100644
+--- a/src/sgx/sgx.c
++++ b/src/sgx/sgx.c
+@@ -768,6 +768,10 @@ uintptr_t create_enclave_mem(char *p, int base_zero, void *base_zero_max) {
+     }
+ 
+     ubase = ecreate(size, ssaFrameSize, s, encl_base_addr);
++    
++    printf("sgx.c: ubase = %p, size = %x -> end = %p\n", ubase, size, ubase + size - 1);
++
++
+     heap_size = enc->heap_size; // Used by GDB plugin
+     process_pages(p, (uint64_t)ubase, heap, stack, tcsp, nssa, &add_page);
+ 

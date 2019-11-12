@@ -45,7 +45,13 @@ sanitization only leads to side-channel leakage._
 
 ## Source code overview
 
-We provide proof-of-concept exploits for the selected vulnerabilties marked with a star `*` in the above table. The code is organized with a subdirectory for each enclave runtime. As all of the vulnerabilities have been patched, we provide [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) pointing to the vulnerable runtime versions.
+We provide proof-of-concept exploits for the selected vulnerabilties marked
+with a star `*` in the above table. The code is organized with a subdirectory
+for each enclave runtime. Our attacker code is provided as patches to the
+_untrusted_ runtime component. As the reported vulnerabilities have now been
+patched, we provide [git
+submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) pointing to
+the vulnerable trusted runtime versions.
 
 ## License
 

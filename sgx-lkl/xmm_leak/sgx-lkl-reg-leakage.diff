@@ -1,0 +1,340 @@
+diff --git a/apps/helloworld/Makefile b/apps/helloworld/Makefile
+index 9e67086..5b8f5da 100644
+--- a/apps/helloworld/Makefile
++++ b/apps/helloworld/Makefile
+@@ -20,10 +20,10 @@ clean:
+ 	rm -f $(DISK) $(PROG)
+ 
+ $(PROG): $(PROG_C)
+-	../../build/host-musl/bin/musl-gcc -fPIE -pie -o $@ $(PROG_C)
++	../../build/host-musl/bin/musl-gcc -Os -maes -fPIE -pie -o $@ $(PROG_C)
+ 
+ $(PROG_NONPIE): $(PROG_C)
+-	../../build/host-musl/bin/musl-gcc -fno-pie -no-pie -o $@ $(PROG_C)
++	../../build/host-musl/bin/musl-gcc -Os -maes -fno-pie -no-pie -o $@ $(PROG_C)
+ 
+ $(DISK): $(PROG) $(PROG_NONPIE)
+ 	dd if=/dev/zero of="$@" count=$(IMAGE_SIZE_MB) bs=1M
+diff --git a/apps/helloworld/helloworld.c b/apps/helloworld/helloworld.c
+index 61edb0c..53812c5 100644
+--- a/apps/helloworld/helloworld.c
++++ b/apps/helloworld/helloworld.c
+@@ -2,24 +2,153 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <stdint.h>     // for uint8_t
++#include <wmmintrin.h>  // for intrinsics for AES-NI
++
++/*
++
++asm volatile("" ::: "memory");      \
++volatile uint64_t tsc = __builtin_ia32_rdtsc(); \
++asm volatile("" ::: "memory");      \
++
++*/
++
++#define DO_ENC_BLOCK(m,k) \
++    unsigned int a = 0;      \
++	do{\
++        m = _mm_xor_si128       (m, k[ 0]); \
++        m = _mm_aesenc_si128    (m, k[ 1]); \
++        m = _mm_aesenc_si128    (m, k[ 2]); \
++        m = _mm_aesenc_si128    (m, k[ 3]); \
++        m = _mm_aesenc_si128    (m, k[ 4]); \
++        m = _mm_aesenc_si128    (m, k[ 5]); \
++        m = _mm_aesenc_si128    (m, k[ 6]); \
++        m = _mm_aesenc_si128    (m, k[ 7]); \
++        m = _mm_aesenc_si128    (m, k[ 8]); \
++        m = _mm_aesenc_si128    (m, k[ 9]); \
++        m = _mm_aesenclast_si128(m, k[10]); \
++    }while(0)
++
++#define DO_ENC_BLOCK_NOTFINAL(m,k) \
++	do{\
++        m = _mm_xor_si128       (m, k[ 0]); \
++        m = _mm_aesenc_si128    (m, k[ 1]); \
++        m = _mm_aesenc_si128    (m, k[ 2]); \
++        m = _mm_aesenc_si128    (m, k[ 3]); \
++        m = _mm_aesenc_si128    (m, k[ 4]); \
++        m = _mm_aesenc_si128    (m, k[ 5]); \
++        m = _mm_aesenc_si128    (m, k[ 6]); \
++        m = _mm_aesenc_si128    (m, k[ 7]); \
++        m = _mm_aesenc_si128    (m, k[ 8]); \
++        m = _mm_aesenc_si128    (m, k[ 9]); \
++    }while(0)
++
++#define AES_128_key_exp(k, rcon) aes_128_key_expansion(k, _mm_aeskeygenassist_si128(k, rcon))
++
++static __m128i key_schedule[20];//the expanded key
++
++static __m128i aes_128_key_expansion(__m128i key, __m128i keygened){
++	keygened = _mm_shuffle_epi32(keygened, _MM_SHUFFLE(3,3,3,3));
++	key = _mm_xor_si128(key, _mm_slli_si128(key, 4));
++	key = _mm_xor_si128(key, _mm_slli_si128(key, 4));
++	key = _mm_xor_si128(key, _mm_slli_si128(key, 4));
++	return _mm_xor_si128(key, keygened);
++}
++
++//public API
++void aes128_load_key(uint8_t *enc_key){
++    key_schedule[0] = _mm_loadu_si128((const __m128i*) enc_key);
++	key_schedule[1]  = AES_128_key_exp(key_schedule[0], 0x01);
++	key_schedule[2]  = AES_128_key_exp(key_schedule[1], 0x02);
++	key_schedule[3]  = AES_128_key_exp(key_schedule[2], 0x04);
++	key_schedule[4]  = AES_128_key_exp(key_schedule[3], 0x08);
++	key_schedule[5]  = AES_128_key_exp(key_schedule[4], 0x10);
++	key_schedule[6]  = AES_128_key_exp(key_schedule[5], 0x20);
++	key_schedule[7]  = AES_128_key_exp(key_schedule[6], 0x40);
++	key_schedule[8]  = AES_128_key_exp(key_schedule[7], 0x80);
++	key_schedule[9]  = AES_128_key_exp(key_schedule[8], 0x1B);
++	key_schedule[10] = AES_128_key_exp(key_schedule[9], 0x36);
++
++	// generate decryption keys in reverse order.
++    // k[10] is shared by last encryption and first decryption rounds
++    // k[0] is shared by first encryption round and last decryption round (and is the original user key)
++    // For some implementation reasons, decryption key schedule is NOT the encryption key schedule in reverse order
++	key_schedule[11] = _mm_aesimc_si128(key_schedule[9]);
++	key_schedule[12] = _mm_aesimc_si128(key_schedule[8]);
++	key_schedule[13] = _mm_aesimc_si128(key_schedule[7]);
++	key_schedule[14] = _mm_aesimc_si128(key_schedule[6]);
++	key_schedule[15] = _mm_aesimc_si128(key_schedule[5]);
++	key_schedule[16] = _mm_aesimc_si128(key_schedule[4]);
++	key_schedule[17] = _mm_aesimc_si128(key_schedule[3]);
++	key_schedule[18] = _mm_aesimc_si128(key_schedule[2]);
++	key_schedule[19] = _mm_aesimc_si128(key_schedule[1]);
++}
++
++void aes128_enc(uint8_t *plainText,uint8_t *cipherText){
++    __m128i m = _mm_loadu_si128((__m128i *) plainText);
++
++    DO_ENC_BLOCK(m,key_schedule);
++
++    _mm_storeu_si128((__m128i *) cipherText, m);
++}
++
++void aes128_enc_notfinal(uint8_t *plainText,uint8_t *cipherText){
++    __m128i m = _mm_loadu_si128((__m128i *) plainText);
++
++    DO_ENC_BLOCK_NOTFINAL(m,key_schedule);
++
++    _mm_storeu_si128((__m128i *) cipherText, m);
++}
++
++
+ 
+-#define HW_FILE "/app/helloworld.txt"
+ 
+ int main(int argc, char **argv)
+ {
+-    char buf[100];
+-    FILE *f = fopen(HW_FILE, "r");
+-    if (!f) {
+-        fprintf(stderr, "Could not open file %s: %s\n", HW_FILE, strerror(errno));
+-        exit(1);
++    uint8_t plain[]      = {0x32, 0x43, 0xf6, 0xa8, 0x88, 0x5a, 0x30, 0x8d, 0x31, 0x31, 0x98, 0xa2, 0xe0, 0x37, 0x07, 0x34};
++    uint8_t enc_key[]    = { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf };
++    uint8_t cipher[16];
++    uint8_t rk[16];
++    
++    printf("Hello, World, now doing AES...\n");    
++
++    aes128_load_key(enc_key);
++	aes128_enc(plain,cipher);
++
++    printf("Enc done!\n");
++
++    /*aes128_load_key(enc_key);
++	aes128_enc_notfinal(plain,cipherNotfinal);
++
++    printf("State_final = ");
++
++    for(unsigned int i = 0; i < 16; i++)
++    {
++        printf("%02x ", cipherNotfinal[i]);
++    }
++
++    printf("\n");*/
++
++    printf("CT = ");
++
++    for(unsigned int i = 0; i < 16; i++)
++    {
++        printf("%02x ", cipher[i]);
+     }
+ 
+-    // Prints first line of file /app/helloworld.txt (max 100 characters)
+-    if (fgets(buf, sizeof(buf), f) == buf) {
+-        printf("%s", buf);
+-    } else {
+-        fprintf(stderr, "Could not read first line of file %s: %s\n", HW_FILE, strerror(errno));
+-        exit(1);
++    printf("\n");
++
++    for(unsigned int i = 0; i < 10; i++)
++    {
++        printf("RK%d = ", i);
++        _mm_storeu_si128((__m128i *) rk, key_schedule[i]);
++
++        for(unsigned int i = 0; i < 16; i++)
++        {
++            printf("%02x ", rk[i]);
++        }
++
++        printf("\n");
+     }
+ 
+     return 0;
+diff --git a/lkl b/lkl
+--- a/lkl
++++ b/lkl
+@@ -1 +1 @@
+-Subproject commit 58dc2025bf469d880d76250e682dd8e4ed225a6b
++Subproject commit 58dc2025bf469d880d76250e682dd8e4ed225a6b-dirty
+diff --git a/src/include/sgx_enclave_config.h b/src/include/sgx_enclave_config.h
+index f05fcb7..8ab239b 100644
+--- a/src/include/sgx_enclave_config.h
++++ b/src/include/sgx_enclave_config.h
+@@ -251,6 +251,7 @@ void     set_eh_handling(uint64_t val);
+ 
+ void ecall_cpuid(gprsgx_t *regs);
+ void ecall_rdtsc(gprsgx_t *regs, uint64_t ts);
++void ocall_cpuid(unsigned int* request);
+ 
+ void ereport(void *target, char *report_data, char *report);
+ 
+diff --git a/src/main/sgxlkl_run.c b/src/main/sgxlkl_run.c
+index 9465182..7788de9 100644
+--- a/src/main/sgxlkl_run.c
++++ b/src/main/sgxlkl_run.c
+@@ -35,6 +35,9 @@
+ #include <linux/if_tun.h>
+ #include <getopt.h>
+ 
++#include <wmmintrin.h>  // for intrinsics for xmm regs
++
++
+ #include "enclave_mem.h"
+ #include "load_elf.h"
+ #include "mpmc_queue.h"
+@@ -960,6 +963,69 @@ void do_cpuid(unsigned int* reg) {
+             "a" (reg[0]), "c"(reg[2]));
+ }
+ 
++static void dump_xmm_regs(uint8_t pos, uint64_t ret)
++{
++    uint8_t leak0[16] = { 0 };
++    uint8_t leak1[16] = { 0 };
++    uint8_t leak2[16] = { 0 };
++    uint8_t leak3[16] = { 0 };
++    uint8_t leak4[16] = { 0 };
++    uint8_t leak5[16] = { 0 };
++    
++    asm ("movups %%xmm0, %0" : : "m" (leak0));
++    asm ("movups %%xmm1, %0" : : "m" (leak1));
++    asm ("movups %%xmm2, %0" : : "m" (leak2));
++    asm ("movups %%xmm3, %0" : : "m" (leak3));
++    asm ("movups %%xmm4, %0" : : "m" (leak4));
++    asm ("movups %%xmm5, %0" : : "m" (leak5));
++
++    printf("sgxlkl_run.c (%d): Enclave returned with %lx\n", pos, ret);
++
++    printf("xmm0 = ");
++    for(unsigned int i = 0; i < 16; i++)
++    {
++        printf("%02x ", leak0[i]);
++    }
++    printf("\n");
++
++    printf("xmm1 = ");
++    for(unsigned int i = 0; i < 16; i++)
++    {
++        printf("%02x ", leak1[i]);
++    }
++    printf("\n");
++
++    printf("xmm2 = ");
++    for(unsigned int i = 0; i < 16; i++)
++    {
++        printf("%02x ", leak2[i]);
++    }
++    printf("\n");
++
++    printf("xmm3 = ");
++    for(unsigned int i = 0; i < 16; i++)
++    {
++        printf("%02x ", leak3[i]);
++    }
++    printf("\n");
++
++    printf("xmm4 = ");
++    for(unsigned int i = 0; i < 16; i++)
++    {
++        printf("%02x ", leak4[i]);
++    }
++    printf("\n");
++
++    printf("xmm5 = ");
++    for(unsigned int i = 0; i < 16; i++)
++    {
++        printf("%02x ", leak5[i]);
++    }
++    printf("\n");
++
++
++}
++
+ void* enclave_thread(void* parm) {
+     args_t* args = (args_t*)parm;
+     uint64_t ret[2];
+@@ -967,7 +1033,10 @@ void* enclave_thread(void* parm) {
+     my_tcs_id = args->tcs_id;
+     while (!__state_exiting) {
+         enter_enclave(args->tcs_id, args->call_id, args->args, ret);
+-#ifdef DEBUG
++
++        dump_xmm_regs(0, ret[0]);
++
++        #ifdef DEBUG
+         __sync_fetch_and_add(&_enclave_exit_stats[ret[0]], 1);
+ #endif /* DEBUG */
+         switch (ret[0]) {
+@@ -1039,9 +1108,13 @@ void forward_signal(int signum, void *handler_arg) {
+     siginfo.signum = signum;
+     siginfo.arg = handler_arg;
+     arg = &siginfo;
++
++    printf("sgxlkl_run.c: Forward signal with siginfo at %p, signum = %d, siginfo.arg = %p\n", &siginfo, siginfo.signum, siginfo.arg);
++
+ reenter:
+     if (__state_exiting) return;
+     enter_enclave(my_tcs_id, call_id, arg, ret);
++    dump_xmm_regs(1, ret[0]);
+ #ifdef DEBUG
+     __sync_fetch_and_add(&_enclave_exit_stats[ret[0]], 1);
+ #endif /* DEBUG */
+@@ -1066,7 +1139,11 @@ reenter:
+     }
+ }
+ 
+-void sigill_handler(int sig, siginfo_t *si, void *unused) {
++
++void sigill_handler(int sig, siginfo_t *si, void *unused) 
++{
++    dump_xmm_regs(2, 0);
++
+     uint64_t low, high;
+     uint64_t rsi;
+     /* do rdtsc just in case */
+diff --git a/src/sgx/enclave_signal.c b/src/sgx/enclave_signal.c
+index 0120f8a..9f1f0c2 100644
+--- a/src/sgx/enclave_signal.c
++++ b/src/sgx/enclave_signal.c
+@@ -164,6 +164,7 @@ static int handle_sigill(gprsgx_t *regs, void *arg) {
+         return 0;
+     /* RDTSC opcode: 0f 31 */
+     case 0x310f:
++        printf("Handled RDTSC inside enclave.\n");
+         ecall_rdtsc(regs, (uint64_t) arg);
+         return 0;
+     }

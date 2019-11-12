@@ -1,0 +1,115 @@
+https://github.com/lsds/sgx-lkl/blob/master/src/host/sgx_hostcalls.c
+
+int host_syscall_SYS_clock_gettime(clockid_t clk_id, struct timespec *tp);
+int host_syscall_SYS_fstat(int fd, struct stat *buf);
+int host_syscall_SYS_nanosleep(const struct timespec *req, struct timespec *rem);
+ssize_t host_syscall_SYS_readv(int fd, struct iovec *iov, int iovcnt);
+int host_syscall_SYS_poll(struct pollfd *fds, nfds_t nfds, int timeout);
+int host_syscall_SYS_rt_sigaction(int signum, struct sigaction *act, struct sigaction *oldact, unsigned long nsig);
+int host_syscall_SYS_rt_sigtimedwait(const sigset_t *set, siginfo_t *info, const struct timespec *timeout, unsigned long nsig);
+ssize_t host_syscall_SYS_writev(int fd, const struct iovec *iov, int iovcnt);
+
+
+https://github.com/lsds/sgx-lkl-musl/blob/77573a760b18f63e4e26fd06fbd188d858777151/arch/x86_64/bits/stat.h
+/* copied from kernel definition, but with padding replaced
+ * by the corresponding correctly-sized userspace types. */
+
+struct stat {
+	dev_t st_dev;
+	ino_t st_ino;
+	nlink_t st_nlink;
+
+	mode_t st_mode;
+	uid_t st_uid;
+	gid_t st_gid;
+	unsigned int    __pad0;
+	dev_t st_rdev;
+	off_t st_size;
+	blksize_t st_blksize;
+	blkcnt_t st_blocks;
+
+	struct timespec st_atim;
+	struct timespec st_mtim;
+	struct timespec st_ctim;
+	long __unused[3];
+};
+
+https://github.com/lsds/sgx-lkl-musl/blob/ba7ba5363abaa37d328c3e9a02b4bd3350c9b8f7/include/alltypes.h.in
+STRUCT iovec { void *iov_base; size_t iov_len; };
+
+https://github.com/lsds/sgx-lkl-musl/blob/5433eb2f0d018434429ff5a63cb291130808c745/include/signal.h
+struct sigaction {
+	union {
+		void (*sa_handler)(int);
+		void (*sa_sigaction)(int, siginfo_t *, void *);
+	} __sa_handler;
+	sigset_t sa_mask;
+	int sa_flags;
+	void (*sa_restorer)(void);
+};
+
+https://github.com/lsds/sgx-lkl-musl/blob/5433eb2f0d018434429ff5a63cb291130808c745/include/signal.h#L97
+typedef struct {
+#ifdef __SI_SWAP_ERRNO_CODE
+	int si_signo, si_code, si_errno;
+#else
+	int si_signo, si_errno, si_code;
+#endif
+	union {
+		char __pad[128 - 2*sizeof(int) - sizeof(long)];
+		struct {
+			union {
+				struct {
+					pid_t si_pid;
+					uid_t si_uid;
+				} __piduid;
+				struct {
+					int si_timerid;
+					int si_overrun;
+				} __timer;
+			} __first;
+			union {
+				union sigval si_value;
+				struct {
+					int si_status;
+					clock_t si_utime, si_stime;
+				} __sigchld;
+			} __second;
+		} __si_common;
+		struct {
+			void *si_addr;
+			short si_addr_lsb;
+			union {
+				struct {
+					void *si_lower;
+					void *si_upper;
+				} __addr_bnd;
+				unsigned si_pkey;
+			} __first;
+		} __sigfault;
+		struct {
+			long si_band;
+			int si_fd;
+		} __sigpoll;
+		struct {
+			void *si_call_addr;
+			int si_syscall;
+			unsigned si_arch;
+		} __sigsys;
+	} __si_fields;
+} siginfo_t;
+
+
+OK
+https://github.com/lsds/sgx-lkl-musl/blob/ba7ba5363abaa37d328c3e9a02b4bd3350c9b8f7/include/alltypes.h.in
+STRUCT timespec { time_t tv_sec; long tv_nsec; };
+
+				 
+https://github.com/lsds/sgx-lkl-musl/blob/77573a760b18f63e4e26fd06fbd188d858777151/include/poll.h			 
+struct pollfd {
+	int fd;
+	short events;
+	short revents;
+};
+
+

@@ -7,3 +7,6 @@
 [submodule "keystone/keystone-sdk"]
 	path = keystone/keystone-sdk
 	url = https://github.com/keystone-enclave/keystone-sdk.git
+[submodule "sgx-lkl/sgx-lkl"]
+	path = sgx-lkl/sgx-lkl
+	url = https://github.com/lsds/sgx-lkl.git

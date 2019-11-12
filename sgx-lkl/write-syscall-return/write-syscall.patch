@@ -1,0 +1,188 @@
+diff --git a/apps/helloworld/Makefile b/apps/helloworld/Makefile
+index 9e67086..f2c9e79 100644
+--- a/apps/helloworld/Makefile
++++ b/apps/helloworld/Makefile
+@@ -32,7 +32,9 @@ $(DISK): $(PROG) $(PROG_NONPIE)
+ 		mkdir -p $(MOUNTPOINT); \
+ 		mount -t ext4 -o loop "$@" $(MOUNTPOINT); \
+ 		mkdir -p $(MOUNTPOINT)/app; \
+-		echo "Hello World!" > $(MOUNTPOINT)/app/helloworld.txt; \
++		echo "Hello World 1!" > $(MOUNTPOINT)/app/helloworld.txt; \
++		echo "Hello World 2!" >> $(MOUNTPOINT)/app/helloworld.txt; \
++		echo "Hello World 3!" >> $(MOUNTPOINT)/app/helloworld.txt; \
+ 		cp $(PROG)  $(MOUNTPOINT)/app; \
+ 		cp $(PROG_NONPIE)  $(MOUNTPOINT)/app; \
+ 		umount $(MOUNTPOINT); \
+diff --git a/apps/helloworld/helloworld.c b/apps/helloworld/helloworld.c
+index 61edb0c..5d65bcc 100644
+--- a/apps/helloworld/helloworld.c
++++ b/apps/helloworld/helloworld.c
+@@ -3,25 +3,49 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
+-#define HW_FILE "/app/helloworld.txt"
++#include <stdio.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <sys/uio.h>
++#include <unistd.h>
+ 
+-int main(int argc, char **argv)
+-{
+-    char buf[100];
+-    FILE *f = fopen(HW_FILE, "r");
+-    if (!f) {
+-        fprintf(stderr, "Could not open file %s: %s\n", HW_FILE, strerror(errno));
+-        exit(1);
+-    }
++#define HW_FILE "/app/helloworld.txt"
+ 
+-    // Prints first line of file /app/helloworld.txt (max 100 characters)
+-    if (fgets(buf, sizeof(buf), f) == buf) {
+-        printf("%s", buf);
+-    } else {
+-        fprintf(stderr, "Could not read first line of file %s: %s\n", HW_FILE, strerror(errno));
+-        exit(1);
+-    }
+ 
++int main(int argc, char **argv)
++{	
++	printf("\nHello world from enclaved application binary!");
++    
++	char* buff = "The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog";
++	
++	
++	
++	size_t bytes_in_buff = strlen(buff) + 1;
++	
++	unsigned int i = 0;
++	
++	while (bytes_in_buff > 0 && i < 3)
++	{
++		size_t block_size = (bytes_in_buff < 128) ? bytes_in_buff : 128;
++		size_t bytes_sent = write(STDOUT_FILENO, buff, block_size);
++		
++		if (bytes_sent < 0)
++		{
++			perror("write");  // or whatever
++			break;
++		}
++		
++		buff += bytes_sent;
++		bytes_in_buff -= bytes_sent;
++		i++;
++		printf("\n %d byte written, %d remaining\n", bytes_sent, bytes_in_buff);
++	}
++	
++	
++	char *secret = "super secret enclave string";
++	printf("\t--> enclave secret at %p\n\n", secret);
++		
+     return 0;
+ }
+ 
+diff --git a/lkl b/lkl
+--- a/lkl
++++ b/lkl
+@@ -1 +1 @@
+-Subproject commit 58dc2025bf469d880d76250e682dd8e4ed225a6b
++Subproject commit 58dc2025bf469d880d76250e682dd8e4ed225a6b-dirty
+diff --git a/src/main/sgxlkl_run.c b/src/main/sgxlkl_run.c
+index 0051772..87b5d4d 100644
+--- a/src/main/sgxlkl_run.c
++++ b/src/main/sgxlkl_run.c
+@@ -329,7 +329,11 @@ void *host_syscall_thread(void *v) {
+         __sync_fetch_and_add(&_host_syscall_stats[syscallno], 1);
+ #endif /* DEBUG */
+ 
++        //printf("Invoking syscall %d (write = %d), args = %p %p %p %p %p %p\n", scall[i].syscallno, SYS_write, scall[i].arg1, scall[i].arg2, scall[i].arg3, scall[i].arg4, scall[i].arg5, scall[i].arg6);
++		
+         /* Acquire ticket lock if the system call writes to stdout or stderr to prevent mangling of concurrent writes */
++		uint8_t is_stdout_write = 0;
++		
+         if (scall[i].syscallno == SYS_write || scall[i].syscallno == SYS_writev) {
+             int fd = (int) scall[i].arg1;
+             if (fd == STDOUT_FILENO) {
+@@ -340,6 +344,13 @@ void *host_syscall_thread(void *v) {
+                 curr_print_lock = &__stderr_print_lock;
+             }
+         }
++		
++		if (scall[i].syscallno == 0x1) {
++            int fd = (int) scall[i].arg1;
++            if (fd == STDOUT_FILENO) {
++				is_stdout_write = 1;
++			}
++		}
+ 
+         if (scall[i].syscallno == SYS_clock_gettime) {
+             scall[i].ret_val = clock_gettime(scall[i].arg1, (struct timespec *)scall[i].arg2);
+@@ -348,6 +359,12 @@ void *host_syscall_thread(void *v) {
+             }
+         } else {
+             do_syscall((syscall_t*)&scall[i]);
++			
++			if(is_stdout_write == 1 && scall[i].arg3 == 92 && scall[i].ret_val == 92)
++			{
++				printf("\n Faulting write() to stdout: %p %d %d\n", scall[i].arg2, scall[i].arg3, scall[i].ret_val);
++				scall[i].ret_val += 1;
++			}
+         }
+ 
+         /* Release ticket lock if previously acquired */
+@@ -1249,14 +1266,19 @@ int main(int argc, char *argv[], char *envp[]) {
+ 
+     char* enclave_start = mmap(0, lkl_lib_stat.st_size, PROT_READ|PROT_WRITE, MAP_PRIVATE, lkl_lib_fd, 0);
+ 
++    printf("enclave_start = %p\n", enclave_start);
++
+     init_sgx();
+     if (getenv("SGXLKL_HEAP") || getenv("SGXLKL_KEY")) {
+         if (!getenv("SGXLKL_KEY"))
+             sgxlkl_fail("Heap size but no enclave signing key specified. Please specify a signing key via SGXLKL_KEY.\n");
+         enclave_update_heap(enclave_start, getenv_uint64("SGXLKL_HEAP", DEFAULT_HEAP_SIZE, ULONG_MAX), getenv("SGXLKL_KEY"));
+     }
+-    create_enclave_mem(enclave_start, getenv_bool("SGXLKL_NON_PIE", 0), &__sgxlklrun_text_segment_start);
++    uint64_t ubase = create_enclave_mem(enclave_start, getenv_bool("SGXLKL_NON_PIE", 0), &__sgxlklrun_text_segment_start);
+ 
++    printf("ubase = %p\n", ubase);
++
++    
+     // Check if there are enough TCS for all ethreads.
+     int num_tcs = get_tcs_num();
+     if (num_tcs == 0) sgxlkl_fail("No TCS number specified \n");
+@@ -1282,6 +1304,7 @@ int main(int argc, char *argv[], char *envp[]) {
+ 
+     encl.base = encl_map.base;
+     encl.ifn = encl_map.entry_point;
++
+ #endif
+ 
+     /* Launch system call threads */
+@@ -1303,7 +1326,23 @@ int main(int argc, char *argv[], char *envp[]) {
+ #endif
+ 
+     encl.argc = argc - 2;
+-    encl.argv = (argv + 2);
++    
++    char** argv_encl = argv + 2;
++
++#if 0
++    printf("\n\n------------------------------\n");
++    printf("attacker: enter offset from ubase, current arguments[1]=%p > ", argv_encl[1]);
++    char *adrs = NULL;
++    scanf("%p", &adrs);
++
++    adrs += ubase;
++
++    printf("\nattacker: replacing untrusted string pointer argv[1] with adrs %p\n", adrs);
++    argv_encl[1] = adrs; 
++    printf("------------------------------\n\n\n");
++#endif
++
++    encl.argv = argv_encl;
+ 
+     // Find aux vector (after envp vector)
+     for (auxvp = envp; *auxvp; auxvp++);
