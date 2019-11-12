@@ -1,0 +1,6 @@
+[submodule "sancus/sancus-examples"]
+	path = sancus/sancus-examples
+	url = https://github.com/sancus-pma/sancus-examples.git
+[submodule "sancus/soteria/soteria-test"]
+	path = sancus/soteria/soteria-test
+	url = https://github.com/sancus-pma/soteria-test.git

