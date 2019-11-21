@@ -1,8 +1,12 @@
+**Disclaimer.** We would like to clarify that this specific issue is already very old and does not apply to recent Graphene-SGX distributions. Particularly, our team first discovered this issue in December 2016 and it got subsequently fixed in the Graphene code base already back in 2017 following our report. Full details are available in the [Graphene issue tracker](https://github.com/oscarlab/graphene/issues/28). The text below is take verbatim from our original report. See also [here](https://github.com/jovanbulck/0xbadc0de/issues/1) for more details on the current status of all reported Graphene-SGX vulnerabilities.
+
+## Original report
+
 We identified several security-critical vulnerabilities in Graphene's trusted runtime for SGX enclaves. It should be noted that the containing host application, including the unprotected Graphene runtime, is completely *untrusted* in the SGX attacker model.
 
 This issue was tracked earlier via https://github.com/oscarlab/graphene/issues/28
 
-## Vulnerabilities
+### Vulnerabilities
 
 As a general rule, the trusted intra-enclave runtime should properly check *all* arguments/return values passed from the untrusted runtime. This is currently not the case in at least the following places:
 
@@ -35,7 +39,7 @@ An attacker can abuse this to initialize the in-enclave stack pointer of a newly
 
 * `enclave_ecalls.c` contains an entry function `enclave_ecall_thread_start` that redirects control flow to a provided function address. The function pointer is not restricted in any way, allowing an attacker to jump to arbitrary code locations within the enclave. The attacker also has control over the first argument provided to the function.
 
-## Proof-of-Concept Exploit
+### Proof-of-Concept Exploit
 
 I included a proof-of-concept exploit at [https://github.com/jovanbulck/graphene](https://github.com/jovanbulck/graphene/blob/master/Pal/src/host/Linux-SGX/sgx_enclave.c#L739).
 
@@ -60,7 +64,7 @@ destroying enclave...
 
 I also included a proof-of-concept exploit that redirects control flow to an arbitrary non-entry function of the trusted runtime by abusing the argument of `enclave_ecall_thread_start`. It can easily be understood that this allows for code abuse attacks that could break the confidentiality/integrity of in-enclave data.
 
-## Security Patches
+### Security Patches
 
 It should be clear from the above explanation and the exploit that Graphene's trusted runtime should *restrict enclave entry to a few well-defined entry points*. I did not write a patch since it is not yet entirely clear what the best solution would be:
 
